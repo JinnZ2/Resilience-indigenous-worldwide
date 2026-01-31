@@ -178,3 +178,62 @@ The Freedom of Access to Clinic Entrances Act, applied with equal enforcement ac
 Under a consistent and equal interpretation of existing law, corporations and governmental actors that have interfered with, obstructed, intimidated, or damaged religious sites face potential civil and criminal liability exceeding one trillion dollars in aggregate.
 
 This is not a new law or speculative interpretation. It is the direct consequence of applying FACE Act language uniformly and with equal enforcement across all faith traditions and sacred sites—the foundation of legal consistency and equal protection.
+
+
+CRITICAL AMENDMENT
+Sovereignty Protection Clause to Prevent Framework Inversion
+
+January 30, 2026
+
+I. The Weaponization Risk
+If FACE Act enforcement becomes selective rather than consistent, the framework designed to protect religious sites can be inverted to criminalize indigenous and religious communities defending their own sacred lands. This amendment prevents that inversion.
+
+II. Sovereignty Protection Doctrine
+A. Core Principle
+FACE Act protections cannot be weaponized against religious practitioners defending their own places of worship from external interference. This is foundational to equal protection and prevents institutional capture of religious freedom protections.
+
+B. Protected Activities
+The following activities by religious practitioners are EXEMPT from FACE prosecution:
+
+• Defense of sacred sites from corporate or governmental intrusion
+• Blocking equipment, personnel, or operations that threaten sacred land integrity
+• Physical presence on ancestral or treaty-protected lands to prevent desecration
+• Ceremony and prayer conducted in resistance to land destruction
+• Peaceful assembly preventing access to religious sites by destructive actors
+C. Legal Rationale
+FACE Act language prohibits interference with persons lawfully exercising religious freedom. When external actors (corporations, government contractors) are the interfering parties:
+
+• Religious practitioners defending sites are exercising lawful religious freedom
+• Extractive/destructive operations are the interference with religious exercise
+• Defenders cannot simultaneously be violators—the aggressor is the interfering party
+III. Tribal Sovereignty Supremacy
+On tribal lands held in trust or subject to treaty protection, tribal jurisdiction is supreme. Federal FACE enforcement cannot override tribal authority to exclude non-members from sacred sites or ceremonial grounds.
+
+Any attempt to prosecute tribal members or allies for defending reservation lands under FACE violates sovereignty doctrine established in Worcester v. Georgia (1832) and reaffirmed through modern tribal sovereignty jurisprudence.
+
+IV. Burden of Proof Reversal
+In cases where religious practitioners are accused of FACE violations while defending sacred sites:
+
+• Prosecution must prove the external actor had legitimate right to access/operate
+• Prosecution must prove operations did not constitute interference with religious exercise
+• Defense need only establish regular religious use of the site
+• Religious practitioners' presence is presumed lawful on ancestral/sacred lands
+V. Anti-Weaponization Safeguards
+A. Enforcement Consistency Test
+Any FACE prosecution of religious defenders must be evaluated against enforcement patterns. If prosecution targets defenders while corporate violators remain unprosecuted, the action is presumptively selective enforcement and violates equal protection.
+
+B. Standing Doctrine
+Religious practitioners and indigenous communities have automatic standing to challenge FACE prosecutions that target site defenders.
+
+C. Judicial Review Standard
+Courts reviewing FACE charges against religious site defenders must apply strict scrutiny and require the government to demonstrate compelling interest in facilitating external access over religious protection.
+
+VI. Implementation Language
+Proposed clarifying amendment to 18 U.S.C. § 248:
+
+"Nothing in this section shall be construed to prohibit religious practitioners from defending places of religious worship from external interference, obstruction, or destruction. On tribal lands and ancestral territories, tribal jurisdiction is supreme and federal prosecution of religious site defenders is prohibited. In all cases, persons engaged in lawful religious exercise retain absolute right to exclude interfering parties from sacred sites."
+
+VII. Conclusion
+Without explicit sovereignty protection, FACE Act enforcement can be weaponized to criminalize the very communities it was intended to protect. This amendment prevents framework inversion and ensures religious freedom protections cannot be captured for institutional suppression.
+
+Equal enforcement requires protecting defenders, not just sites. Sovereignty protection is not a loophole—it's the foundational principle preventing selective weaponization.
