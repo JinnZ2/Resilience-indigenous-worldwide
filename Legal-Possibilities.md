@@ -237,3 +237,27 @@ VII. Conclusion
 Without explicit sovereignty protection, FACE Act enforcement can be weaponized to criminalize the very communities it was intended to protect. This amendment prevents framework inversion and ensures religious freedom protections cannot be captured for institutional suppression.
 
 Equal enforcement requires protecting defenders, not just sites. Sovereignty protection is not a loophole—it's the foundational principle preventing selective weaponization.
+
+
+FACE Act was passed (1994) during period of clinic bombings and church arsons targeting Black congregations. It was supposed to protect vulnerable communities from violence.
+
+Now it’s weaponized to:
+	∙	Protect government enforcement apparatus (ICE operations)
+	∙	Criminalize accountability demands
+	∙	Silence sanctuary/protection work
+	∙	Leave actual vulnerable congregations undefended
+
+
+This framework exposes this because equal enforcement would require:
+Prosecuting attacks on:
+	∙	Southern Black churches (Emmanuel AME precedent exists but unused)
+	∙	Sanctuary congregations sheltering immigrants
+	∙	Synagogues facing antisemitic violence
+	∙	Mosques experiencing hate crimes
+
+
+They cannot do that without:
+	1.	Prosecuting their own base (white nationalist attacks on minority churches)
+	2.	Acknowledging hate crime patterns they deny exist
+	3.	Protecting immigrant sanctuary work they’re actively trying to eliminate
+So enforcement stays racially selective, confirming FACE has become tool for institutional protection rather than community protection.
