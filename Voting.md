@@ -1,3 +1,32 @@
+Executive Summary: Economic and Infrastructure Risk of Constrained In-Person Voting
+This assessment evaluates the potential economic and operational impact of a nationwide shift to predominantly in-person voting with limited or no mail-in, early, or drop-box options. The analysis extrapolates from historical labor disruptions and federal shutdown data to estimate second-order effects on corporations, infrastructure, and financial markets.
+Core Risk Mechanism
+If voting access is constrained to a single in-person day, a non-trivial portion of the workforce—particularly in logistics, transportation, maintenance, healthcare support, utilities, and food supply—is likely to take unpaid leave or resign rather than forgo voting. Unlike strikes, this behavior would be decentralized, legally protected, and difficult to counter with short-term staffing.
+The risk is not universal absenteeism. It is selective absence in critical roles, which historically produces outsized system failure.
+Economic Impact (Order-of-Magnitude Estimates)
+Using Congressional Budget Office and private-sector models from prior government shutdowns:
+•	Single-day productivity loss:
+Estimated at $20–30 billion in direct GDP impact from absenteeism, delays, and missed transactions.
+•	Cascading losses (3–7 days):
+Supply chain delays, spoilage, missed maintenance windows, and logistics backlogs could plausibly multiply losses to $60–100+ billion, even if voting occurs on one day.
+•	Permanent loss component:
+As seen in the 2018–2019 shutdown, roughly 25–30% of losses may be unrecoverable due to canceled contracts, missed deliveries, and customer churn.
+Sector-Specific Exposure
+•	Logistics & Freight: High vulnerability due to limited redundancy and licensing constraints.
+•	Food Supply & Retail: Just-in-time systems amplify short disruptions into visible shortages.
+•	Energy & Utilities: Maintenance deferrals increase failure probability rather than merely delaying output.
+•	Healthcare & Emergency Services: Staff shortfalls elevate operational risk beyond economic cost.
+Financial Market Implications
+•	Increased volatility driven by uncertainty rather than fundamentals.
+•	Short-term selloffs in transportation, retail, and industrials.
+•	Heightened risk premiums for firms with inflexible labor models.
+•	Negative signaling to international investors regarding institutional stability.
+Corporate Risk Posture
+This is not primarily a political risk. It is a systems design risk arising from coupling civic participation to rigid labor availability. Firms with narrow staffing margins, high regulatory requirements, or physical delivery obligations face disproportionate exposure.
+Conclusion
+Constraining voting mechanisms increases the probability of a synchronized, legally protected labor withdrawal concentrated in critical infrastructure roles. Historical analogs suggest that even a single-day disruption can generate multi-day economic damage with partial permanence. From a corporate and market-stability perspective, expanded voting flexibility functions as economic risk mitigation, not a social concession.
+Need additional variables and impacts
+
 # Addendum: Additional Variables and Impacts
 
 ## Economic and Infrastructure Risk of Constrained In-Person Voting
