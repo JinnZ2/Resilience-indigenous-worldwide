@@ -172,6 +172,153 @@ blind spots before making joint decisions.
 
 ---
 
+## Materials Processing and Autonomous Operations
+
+### geometric_alumina.py -- Turn Waste Into Industry
+
+Geometric alumina processing framework. The industrial Bayer process is a
+line (one vector, high waste). Geometric processing is a polygon -- coupling
+thermodynamics, waste streams, energy inputs, and materials science so that
+waste from one process feeds another. Includes 10 processing methods, a
+coupling explorer that discovers waste/thermal/energy synergies, 8 novel
+pathways (solar-microwave hybrid, bio-microwave cascade, red mud geopolymer,
+hydrogen plasma reduction), and thermodynamic efficiency analysis.
+
+```bash
+python3 geometric_alumina.py
+python3 geometric_alumina.py --json
+```
+
+**Who it helps:** Communities near bauxite deposits or alumina refineries
+who can turn red mud waste into iron, titanium, rare earths, and construction
+materials instead of accepting it as pollution.
+
+---
+
+### geopolymer_construction.py -- Build Structures from Salvaged Waste
+
+Geopolymer construction from industrial byproducts: red mud, reclaimed
+gypsum (drywall), glass cullet, and fiber reinforcement. Simulates slab
+structural integrity, models the three-phase cure sequence (initial set,
+polymerization, strength gain) with temperature gradient monitoring, and
+calculates pressure vessel wall thickness for sCO2 or caustic-environment
+systems from salvaged stainless steel.
+
+```bash
+python3 geopolymer_construction.py --demo
+```
+
+**Who it helps:** Anyone building foundations, floors, or structural
+elements from waste materials instead of importing Portland cement. Works
+with drywall salvaged from demolished buildings, red mud from alumina
+processing, and glass from debris.
+
+---
+
+### sovereign_operations.py -- Run an Autonomous Base
+
+Operational monitoring for self-sufficient sites: water recovery (process
+and grey water with pH/turbidity classification), power field balancing
+(24V DC bus with automatic load shedding during cold snaps), site
+acquisition checklist for cold-climate autonomous bases, and system
+coherence scoring that aggregates all subsystem health into a single
+dashboard.
+
+```bash
+python3 sovereign_operations.py --demo
+```
+
+**Who it helps:** Communities operating off-grid bases that need to
+monitor water purity, manage battery power through extreme weather,
+and maintain visibility across all systems simultaneously.
+
+---
+
+## Biological Systems and Site Security
+
+### biogas_systems.py -- Turn Waste Into Energy and Soil
+
+Human and kitchen waste are a chemical battery and thermal feedstock.
+Compost C:N balancer (single and multi-feedstock), anaerobic digester
+health monitoring (temperature, methane, pH), flexible gas holder sizing
+with energy content calculations, and an integrated daily mass balance
+model.  Includes seasonal heating adjustment for cold climates -- sCO2
+waste heat keeps the digester at 37C even at -30C ambient.
+
+```bash
+python3 biogas_systems.py --demo
+```
+
+**Who it helps:** Any community that needs cooking fuel, soil fertility,
+and sanitation from a single closed-loop system with no external inputs.
+
+---
+
+### perimeter_defense.py -- Protect the Base Autonomously
+
+Threat classification (human, predator, wildlife, vehicle) with
+distance-scaled deterrent response.  Species-specific deterrents (sonic
+for wolves, electric mesh for bears, strobe for cougars, alert for
+humans) activate at proportional intensity based on proximity.  Includes
+cold-climate camera hardening specs (-40C operation) and remote status
+aggregation for operators away from site.
+
+```bash
+python3 perimeter_defense.py --demo
+```
+
+**Who it helps:** Remote or autonomous sites that need wildlife and
+intruder defense without constant human presence.  Decision logic runs
+on any Python installation; actual camera hardware is pluggable.
+
+---
+
+## Integrated Infrastructure
+
+### bio_step_system.py -- Single Chamber Does Everything
+
+A biomimetic reactor that purifies water, generates energy, and stores
+hydraulic/pneumatic potential in one 2-hour cycle.  Four phases: iron
+oxidation (heats water, binds metals), steam-pressure (lifts counterweight,
+compresses air), bio-filtration (living plants polish water), distribution
+(gravity generates electricity).  Single pass removes 97% contaminants;
+triple pass produces potable water.  Replaces $6.2M of separate systems
+with a $900K integrated chamber.
+
+```bash
+python3 bio_step_system.py --demo
+python3 bio_step_system.py --cycles 12 --water-input 5000 --bio-passes 3
+```
+
+**Who it helps:** Communities near contaminated water sources (mining
+runoff, industrial waste, conflict damage) who need clean water AND
+energy from a single affordable installation.
+
+---
+
+## Complete Settlement Design
+
+### geometric_city.py -- The Geometric City
+
+Everything above integrated into a single settlement design.  Sizes
+energy, water, food, materials, waste, and detection systems for a given
+population; discovers within-system and cross-system couplings; computes
+geometric integrity metrics.  A 10,000-person geometric city uses 1/3 the
+energy, 1/2 the water, recovers 92% of waste, and achieves 100%
+self-sufficiency -- with 35x the geometric integrity of an industrial city.
+
+```bash
+python3 geometric_city.py
+python3 geometric_city.py --population 5000 --location arid_inland
+python3 geometric_city.py --json
+```
+
+**Who it helps:** Anyone planning a settlement, refugee camp, or community
+rebuild who wants to start from first principles instead of replicating
+the industrial model that failed.
+
+---
+
 ## Design Principles
 
 These tools share common characteristics that make them suitable for
