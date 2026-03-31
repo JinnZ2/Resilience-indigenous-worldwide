@@ -234,6 +234,45 @@ and maintain visibility across all systems simultaneously.
 
 ---
 
+## Biological Systems and Site Security
+
+### biogas_systems.py -- Turn Waste Into Energy and Soil
+
+Human and kitchen waste are a chemical battery and thermal feedstock.
+Compost C:N balancer (single and multi-feedstock), anaerobic digester
+health monitoring (temperature, methane, pH), flexible gas holder sizing
+with energy content calculations, and an integrated daily mass balance
+model.  Includes seasonal heating adjustment for cold climates -- sCO2
+waste heat keeps the digester at 37C even at -30C ambient.
+
+```bash
+python3 biogas_systems.py --demo
+```
+
+**Who it helps:** Any community that needs cooking fuel, soil fertility,
+and sanitation from a single closed-loop system with no external inputs.
+
+---
+
+### perimeter_defense.py -- Protect the Base Autonomously
+
+Threat classification (human, predator, wildlife, vehicle) with
+distance-scaled deterrent response.  Species-specific deterrents (sonic
+for wolves, electric mesh for bears, strobe for cougars, alert for
+humans) activate at proportional intensity based on proximity.  Includes
+cold-climate camera hardening specs (-40C operation) and remote status
+aggregation for operators away from site.
+
+```bash
+python3 perimeter_defense.py --demo
+```
+
+**Who it helps:** Remote or autonomous sites that need wildlife and
+intruder defense without constant human presence.  Decision logic runs
+on any Python installation; actual camera hardware is pluggable.
+
+---
+
 ## Design Principles
 
 These tools share common characteristics that make them suitable for
