@@ -172,6 +172,68 @@ blind spots before making joint decisions.
 
 ---
 
+## Materials Processing and Autonomous Operations
+
+### geometric_alumina.py -- Turn Waste Into Industry
+
+Geometric alumina processing framework. The industrial Bayer process is a
+line (one vector, high waste). Geometric processing is a polygon -- coupling
+thermodynamics, waste streams, energy inputs, and materials science so that
+waste from one process feeds another. Includes 10 processing methods, a
+coupling explorer that discovers waste/thermal/energy synergies, 8 novel
+pathways (solar-microwave hybrid, bio-microwave cascade, red mud geopolymer,
+hydrogen plasma reduction), and thermodynamic efficiency analysis.
+
+```bash
+python3 geometric_alumina.py
+python3 geometric_alumina.py --json
+```
+
+**Who it helps:** Communities near bauxite deposits or alumina refineries
+who can turn red mud waste into iron, titanium, rare earths, and construction
+materials instead of accepting it as pollution.
+
+---
+
+### geopolymer_construction.py -- Build Structures from Salvaged Waste
+
+Geopolymer construction from industrial byproducts: red mud, reclaimed
+gypsum (drywall), glass cullet, and fiber reinforcement. Simulates slab
+structural integrity, models the three-phase cure sequence (initial set,
+polymerization, strength gain) with temperature gradient monitoring, and
+calculates pressure vessel wall thickness for sCO2 or caustic-environment
+systems from salvaged stainless steel.
+
+```bash
+python3 geopolymer_construction.py --demo
+```
+
+**Who it helps:** Anyone building foundations, floors, or structural
+elements from waste materials instead of importing Portland cement. Works
+with drywall salvaged from demolished buildings, red mud from alumina
+processing, and glass from debris.
+
+---
+
+### sovereign_operations.py -- Run an Autonomous Base
+
+Operational monitoring for self-sufficient sites: water recovery (process
+and grey water with pH/turbidity classification), power field balancing
+(24V DC bus with automatic load shedding during cold snaps), site
+acquisition checklist for cold-climate autonomous bases, and system
+coherence scoring that aggregates all subsystem health into a single
+dashboard.
+
+```bash
+python3 sovereign_operations.py --demo
+```
+
+**Who it helps:** Communities operating off-grid bases that need to
+monitor water purity, manage battery power through extreme weather,
+and maintain visibility across all systems simultaneously.
+
+---
+
 ## Design Principles
 
 These tools share common characteristics that make them suitable for
