@@ -28,6 +28,37 @@ Key constraint: over-coupling stiffens the system, loses adaptive
 behavior, and drops efficiency.  The optimum is controlled variability
 within stable bounds -- not uniformity.
 
+Precise definition:
+  noise = energy outside your coupling bandwidth
+
+Not lost energy.  Uncorrelated energy.  Still carries structure
+(frequency, spatial pattern, intermittency) -- just structure your
+current receiver can't see.
+
+Two ways to use noise:
+  A. Harvest it (hard): match its statistics, don't force order.
+     Wideband receivers, rectification + accumulation, aggregation.
+  B. Use it structurally (often better): prevent stiction, enhance
+     mixing, maintain systems near critical transition points.
+     Often improves total system efficiency more than direct capture.
+
+Three engineering levers:
+  1. Impedance spreading: spectrum of mechanical impedances so
+     different frequencies couple somewhere.
+  2. Nonlinear capture: threshold + rectify + accumulate turns
+     random input into biased output over time.
+  3. Stochastic resonance: add noise to help weak signals cross
+     detection thresholds.  Noise becomes carrier assist.
+
+Decision filter for any noise source:
+  Q1. Is there still structure (frequency, spatial, intermittent)?
+  Q2. Can I match it without forcing coherence?
+  Q3. Does capturing it reduce performance elsewhere?
+  Q4. Is it better used to assist another process?
+
+Hard limit: when recovery increases total system entropy instead
+of reducing it, stop.  Not all noise is worth pursuing.
+
 Old view: noise = loss, suppress, isolate, uniform
 New view: noise = unaligned structure, shape, couple selectively,
           controlled variability
@@ -52,6 +83,7 @@ import json
 import math
 import sys
 from dataclasses import dataclass, field
+from enum import Enum
 from typing import Any, Dict, List, Optional, Tuple
 
 
@@ -135,6 +167,309 @@ STRATEGIES = [
         0.18,
     ),
 ]
+
+
+# ---------------------------
+# Noise Classification
+# ---------------------------
+
+class NoiseType(Enum):
+    """Types of noise, classified by physical origin."""
+    BROADBAND_MECHANICAL = "broadband_mechanical"  # random vibration, micro-deformation
+    THERMAL_FLUCTUATION = "thermal_fluctuation"    # small-scale nabla_T
+    TURBULENT_FLUID = "turbulent_fluid"            # chaotic velocity fields
+    ELECTRICAL_STOCHASTIC = "electrical_stochastic" # charge motion, EM fluctuation
+    CHEMICAL_HETEROGENEITY = "chemical_heterogeneity" # uneven reaction fronts
+
+
+class NoiseUse(Enum):
+    """How to use a noise source."""
+    HARVEST_DIRECT = "harvest_direct"       # extract energy (hard)
+    STRUCTURAL_ASSIST = "structural_assist"  # use to improve other processes (easier)
+    IGNORE = "ignore"                        # not worth pursuing
+
+
+@dataclass
+class NoiseSource:
+    """A classified noise source in a physical system."""
+    name: str
+    noise_type: NoiseType
+    amplitude: float           # relative scale 0-1
+    bandwidth: str             # narrow, moderate, broad
+    has_structure: bool        # frequency, spatial pattern, intermittency
+    recommended_use: NoiseUse
+    lever: str                 # which engineering lever applies
+    rationale: str
+
+
+def classify_noise(
+    noise_type: str,
+    amplitude: float,
+    has_pattern: bool = False,
+    system_stiffness: float = 0.5,
+) -> Dict[str, Any]:
+    """
+    Classify a noise source and recommend action.
+
+    Parameters
+    ----------
+    noise_type : str
+        One of: mechanical, thermal, turbulent, electrical, chemical
+    amplitude : float
+        Relative amplitude (0-1, where 1 = same order as signal)
+    has_pattern : bool
+        Whether the noise has detectable structure (frequency, spatial)
+    system_stiffness : float
+        How coupled/stiff the system already is (0 = loose, 1 = rigid)
+
+    Returns
+    -------
+    dict with classification, recommended use, lever, and rationale.
+    """
+    # Map string to enum
+    type_map = {
+        "mechanical": NoiseType.BROADBAND_MECHANICAL,
+        "thermal": NoiseType.THERMAL_FLUCTUATION,
+        "turbulent": NoiseType.TURBULENT_FLUID,
+        "electrical": NoiseType.ELECTRICAL_STOCHASTIC,
+        "chemical": NoiseType.CHEMICAL_HETEROGENEITY,
+    }
+    nt = type_map.get(noise_type, NoiseType.BROADBAND_MECHANICAL)
+
+    # Decision logic
+    # Q1: Is there structure?
+    if not has_pattern and amplitude < 0.1:
+        return {
+            "noise_type": nt.value,
+            "use": NoiseUse.IGNORE.value,
+            "lever": "none",
+            "rationale": "No structure, low amplitude. Recovery cost exceeds captured energy.",
+            "filter": {"q1_structure": False, "q2_matchable": False,
+                       "q3_hurts_elsewhere": False, "q4_better_as_assist": False},
+        }
+
+    # Q3: Would capturing it stiffen an already-stiff system?
+    if system_stiffness > 0.8:
+        return {
+            "noise_type": nt.value,
+            "use": NoiseUse.STRUCTURAL_ASSIST.value,
+            "lever": "stochastic_resonance",
+            "rationale": (
+                "System already stiff. Use noise as carrier assist to maintain "
+                "adaptivity rather than adding more coupling."
+            ),
+            "filter": {"q1_structure": has_pattern, "q2_matchable": True,
+                       "q3_hurts_elsewhere": True, "q4_better_as_assist": True},
+        }
+
+    # Q4: Is it better as structural assist?
+    if nt in (NoiseType.TURBULENT_FLUID, NoiseType.CHEMICAL_HETEROGENEITY):
+        return {
+            "noise_type": nt.value,
+            "use": NoiseUse.STRUCTURAL_ASSIST.value,
+            "lever": "impedance_spreading" if nt == NoiseType.TURBULENT_FLUID else "nonlinear_capture",
+            "rationale": (
+                f"{nt.value} is more valuable as mixing enhancer or reaction "
+                f"front director than as direct energy source."
+            ),
+            "filter": {"q1_structure": has_pattern, "q2_matchable": True,
+                       "q3_hurts_elsewhere": False, "q4_better_as_assist": True},
+        }
+
+    # Q2: Can we match it?
+    if has_pattern and amplitude > 0.2:
+        lever = "impedance_spreading" if nt == NoiseType.BROADBAND_MECHANICAL else "nonlinear_capture"
+        return {
+            "noise_type": nt.value,
+            "use": NoiseUse.HARVEST_DIRECT.value,
+            "lever": lever,
+            "rationale": (
+                f"Structured {nt.value} at amplitude {amplitude:.1f}. "
+                f"Match with {lever} for partial capture."
+            ),
+            "filter": {"q1_structure": True, "q2_matchable": True,
+                       "q3_hurts_elsewhere": False, "q4_better_as_assist": False},
+        }
+
+    # Default: structural assist
+    return {
+        "noise_type": nt.value,
+        "use": NoiseUse.STRUCTURAL_ASSIST.value,
+        "lever": "stochastic_resonance",
+        "rationale": "Moderate noise with some structure. Best used to assist signal detection.",
+        "filter": {"q1_structure": has_pattern, "q2_matchable": has_pattern,
+                   "q3_hurts_elsewhere": False, "q4_better_as_assist": True},
+    }
+
+
+# ---------------------------
+# Three Engineering Levers
+# ---------------------------
+
+def impedance_spreading(
+    frequencies: List[float],
+    impedances: List[float],
+) -> Dict[str, Any]:
+    """
+    Lever 1: Impedance spreading.
+
+    Instead of matching one frequency, create a spectrum of mechanical
+    impedances so different frequencies couple somewhere in the stack.
+
+    Parameters
+    ----------
+    frequencies : list of float
+        Noise frequency components (Hz)
+    impedances : list of float
+        Available impedance layers (Pa*s/m or similar)
+
+    Returns
+    -------
+    dict with coverage analysis.
+    """
+    if not frequencies or not impedances:
+        return {"coverage": 0, "matched": [], "unmatched": frequencies}
+
+    matched = []
+    unmatched = []
+
+    # Each impedance layer has a bandwidth around its natural frequency
+    for freq in frequencies:
+        found = False
+        for imp in impedances:
+            # Simplified: impedance matches if within 30% of frequency ratio
+            ratio = freq / (imp + 0.01)
+            if 0.7 < ratio < 1.3:
+                matched.append({"frequency": freq, "impedance": imp, "ratio": round(ratio, 2)})
+                found = True
+                break
+        if not found:
+            unmatched.append(freq)
+
+    coverage = len(matched) / len(frequencies) if frequencies else 0
+
+    return {
+        "total_frequencies": len(frequencies),
+        "matched": len(matched),
+        "unmatched_count": len(unmatched),
+        "coverage": round(coverage, 3),
+        "matches": matched,
+        "gaps": unmatched,
+        "recommendation": (
+            "Good coverage" if coverage > 0.7
+            else "Add impedance layers to cover gaps" if coverage > 0.3
+            else "Significant mismatch -- consider nonlinear capture instead"
+        ),
+    }
+
+
+def nonlinear_capture(
+    signal: List[float],
+    threshold: float = 0.5,
+) -> Dict[str, Any]:
+    """
+    Lever 2: Nonlinear capture.
+
+    Linear systems ignore small fluctuations.  Nonlinear systems
+    threshold + rectify + accumulate, turning random input into
+    biased output over time.
+
+    Parameters
+    ----------
+    signal : list of float
+        Time series of noise signal values.
+    threshold : float
+        Activation threshold.
+
+    Returns
+    -------
+    dict with captured energy, efficiency, and duty cycle.
+    """
+    if not signal:
+        return {"captured": 0, "total": 0, "efficiency": 0}
+
+    total_energy = sum(abs(s) for s in signal)
+    captured = sum(max(0, abs(s) - threshold) for s in signal)
+    active_samples = sum(1 for s in signal if abs(s) > threshold)
+    duty_cycle = active_samples / len(signal)
+
+    return {
+        "total_energy": round(total_energy, 4),
+        "captured_energy": round(captured, 4),
+        "efficiency": round(captured / total_energy, 4) if total_energy > 0 else 0,
+        "threshold": threshold,
+        "duty_cycle": round(duty_cycle, 4),
+        "active_samples": active_samples,
+        "total_samples": len(signal),
+        "recommendation": (
+            "Good capture rate" if duty_cycle > 0.3
+            else "Lower threshold or aggregate over more area/time" if duty_cycle > 0.05
+            else "Signal too weak for threshold capture -- use stochastic resonance"
+        ),
+    }
+
+
+def stochastic_resonance(
+    weak_signal: List[float],
+    noise_amplitude: float = 0.5,
+    detection_threshold: float = 1.0,
+) -> Dict[str, Any]:
+    """
+    Lever 3: Stochastic resonance.
+
+    Add noise to improve signal transfer.  Counterintuitive but real:
+    weak signal + noise -> crosses threshold -> detectable.
+
+    Noise becomes carrier assist, not interference.
+
+    Parameters
+    ----------
+    weak_signal : list of float
+        Signal too weak to detect on its own.
+    noise_amplitude : float
+        Amplitude of added noise.
+    detection_threshold : float
+        Threshold for detection.
+
+    Returns
+    -------
+    dict with detection rates with and without noise assist.
+    """
+    import random
+    rng = random.Random(42)
+
+    # Without noise
+    detected_clean = sum(1 for s in weak_signal if abs(s) >= detection_threshold)
+
+    # With noise assist (many trials)
+    trials = 10
+    detected_noisy_total = 0
+    for _ in range(trials):
+        detected = sum(
+            1 for s in weak_signal
+            if abs(s + rng.gauss(0, noise_amplitude)) >= detection_threshold
+        )
+        detected_noisy_total += detected
+    detected_noisy_avg = detected_noisy_total / trials
+
+    rate_clean = detected_clean / len(weak_signal) if weak_signal else 0
+    rate_noisy = detected_noisy_avg / len(weak_signal) if weak_signal else 0
+    improvement = (rate_noisy - rate_clean) / max(rate_clean, 0.001)
+
+    return {
+        "signal_samples": len(weak_signal),
+        "detection_threshold": detection_threshold,
+        "noise_amplitude": noise_amplitude,
+        "detection_rate_clean": round(rate_clean, 4),
+        "detection_rate_with_noise": round(rate_noisy, 4),
+        "improvement_factor": round(improvement, 2),
+        "stochastic_resonance_active": rate_noisy > rate_clean,
+        "recommendation": (
+            f"Noise assists detection ({improvement:.0%} improvement)"
+            if rate_noisy > rate_clean
+            else "Noise amplitude too high or signal already detectable"
+        ),
+    }
 
 
 # ---------------------------
@@ -335,23 +670,40 @@ def run_demo(grid_size: int = 50, as_json: bool = False):
     """Run demonstration of structured noise optimization."""
     comparison = compare_approaches(grid_size)
 
+    # Noise classifications
+    noise_examples = [
+        classify_noise("mechanical", 0.6, has_pattern=True, system_stiffness=0.3),
+        classify_noise("thermal", 0.2, has_pattern=False, system_stiffness=0.5),
+        classify_noise("turbulent", 0.8, has_pattern=True, system_stiffness=0.4),
+        classify_noise("electrical", 0.05, has_pattern=False, system_stiffness=0.9),
+        classify_noise("chemical", 0.4, has_pattern=True, system_stiffness=0.3),
+    ]
+
+    # Three levers
+    imp_result = impedance_spreading(
+        frequencies=[10, 25, 60, 120, 250, 500],
+        impedances=[12, 55, 110, 480],
+    )
+
+    import random
+    rng = random.Random(42)
+    noise_signal = [rng.gauss(0, 1.0) for _ in range(200)]
+    nl_result = nonlinear_capture(noise_signal, threshold=0.8)
+
+    weak = [0.3 * math.sin(i / 5) for i in range(200)]
+    sr_result = stochastic_resonance(weak, noise_amplitude=0.6, detection_threshold=0.8)
+
     if as_json:
         result = {
             "comparison": comparison,
+            "noise_classifications": noise_examples,
+            "impedance_spreading": imp_result,
+            "nonlinear_capture": nl_result,
+            "stochastic_resonance": sr_result,
             "strategies": [
-                {
-                    "name": s.name,
-                    "target": s.target,
-                    "mechanism": s.mechanism,
-                    "intervention": s.intervention,
-                    "expected_improvement": s.expected_improvement,
-                }
+                {"name": s.name, "target": s.target, "mechanism": s.mechanism,
+                 "intervention": s.intervention, "expected_improvement": s.expected_improvement}
                 for s in STRATEGIES
-            ],
-            "design_changes": [
-                "Phase-change thermal buffer materials at high-fluctuation regions",
-                "Flow-structuring geometry: intentionally irregular but bounded",
-                "Layered mechanical interfaces: impedance gradients, not rigid uniform",
             ],
         }
         print(json.dumps(result, indent=2))
@@ -359,39 +711,56 @@ def run_demo(grid_size: int = 50, as_json: bool = False):
 
     print("=" * 70)
     print("  STRUCTURED NOISE OPTIMIZATION")
-    print("  Noise is not loss. It is unaligned structure.")
+    print("  noise = energy outside your coupling bandwidth")
     print("=" * 70)
+
+    print(f"\n--- Noise Classification ---")
+    for nc in noise_examples:
+        print(f"  {nc['noise_type']:25s}  use: {nc['use']:20s}  lever: {nc['lever']}")
+        print(f"    {nc['rationale']}")
+
+    print(f"\n--- Lever 1: Impedance Spreading ---")
+    print(f"  Frequencies: {imp_result['total_frequencies']}  |  "
+          f"Matched: {imp_result['matched']}  |  "
+          f"Coverage: {imp_result['coverage']:.0%}")
+    print(f"  {imp_result['recommendation']}")
+    if imp_result['gaps']:
+        print(f"  Gaps at: {imp_result['gaps']} Hz")
+
+    print(f"\n--- Lever 2: Nonlinear Capture ---")
+    print(f"  Total energy: {nl_result['total_energy']:.2f}  |  "
+          f"Captured: {nl_result['captured_energy']:.2f}  |  "
+          f"Efficiency: {nl_result['efficiency']:.0%}")
+    print(f"  Duty cycle: {nl_result['duty_cycle']:.0%}  |  "
+          f"{nl_result['recommendation']}")
+
+    print(f"\n--- Lever 3: Stochastic Resonance ---")
+    print(f"  Detection clean: {sr_result['detection_rate_clean']:.0%}  |  "
+          f"With noise: {sr_result['detection_rate_with_noise']:.0%}")
+    print(f"  Improvement: {sr_result['improvement_factor']:.0%}  |  "
+          f"SR active: {sr_result['stochastic_resonance_active']}")
+    print(f"  {sr_result['recommendation']}")
 
     print(f"\n--- Conversion Strategies ---")
     for s in STRATEGIES:
-        print(f"\n  {s.name} [{s.target}]")
-        print(f"    Mechanism: {s.mechanism}")
-        print(f"    Intervention: {s.intervention}")
-        print(f"    Expected improvement: {s.expected_improvement:.0%}")
+        print(f"  {s.name:35s}  [{s.target:10s}]  {s.expected_improvement:.0%} expected")
 
     b = comparison["baseline"]
-    s = comparison["structured"]
+    st = comparison["structured"]
     print(f"\n--- Grid Comparison ({grid_size}x{grid_size} = {grid_size**2} cells) ---")
     print(f"  {'Metric':<25} {'Uniform':>12} {'Structured':>12}")
     print(f"  {'-'*25} {'-'*12} {'-'*12}")
-    print(f"  {'Avg efficiency':<25} {b['avg_efficiency']:>12.4f} {s['avg_efficiency']:>12.4f}")
-    print(f"  {'Min efficiency':<25} {b['min_efficiency']:>12.4f} {s['min_efficiency']:>12.4f}")
-    print(f"  {'Max efficiency':<25} {b['max_efficiency']:>12.4f} {s['max_efficiency']:>12.4f}")
-    print(f"  {'Std deviation':<25} {b['std_deviation']:>12.4f} {s['std_deviation']:>12.4f}")
-    print(f"  {'Hotspots (>0.8)':<25} {b['hotspots']:>12} {s['hotspots']:>12}")
-    print(f"  {'Coldspots (<0.2)':<25} {b['coldspots']:>12} {s['coldspots']:>12}")
+    print(f"  {'Avg efficiency':<25} {b['avg_efficiency']:>12.4f} {st['avg_efficiency']:>12.4f}")
+    print(f"  {'Max efficiency':<25} {b['max_efficiency']:>12.4f} {st['max_efficiency']:>12.4f}")
+    print(f"  {'Hotspots (>0.8)':<25} {b['hotspots']:>12} {st['hotspots']:>12}")
+    print(f"  Improvement: {comparison['improvement_pct']:+.1f}%")
 
-    print(f"\n  Improvement: {comparison['improvement_pct']:+.1f}%")
-
-    print(f"\n--- Minimal Design Changes ---")
-    print(f"  1. Thermal buffer materials (phase-change zones at high-fluctuation regions)")
-    print(f"  2. Flow-structuring geometry (not smooth -- intentionally irregular but bounded)")
-    print(f"  3. Layered mechanical interfaces (impedance gradients, not rigid uniform)")
-
-    print(f"\n--- Key Constraint ---")
-    print(f"  Over-coupling stiffens the system and loses adaptive behavior.")
-    print(f"  Goal: tune the boundary where noise becomes useful vs dissipative.")
-    print(f"  Target: controlled variability = {s['bounded_variability']:.4f} (std/mean)")
+    print(f"\n--- Decision Filter ---")
+    print(f"  Q1. Is there still structure (frequency, spatial, intermittent)?")
+    print(f"  Q2. Can I match it without forcing coherence?")
+    print(f"  Q3. Does capturing it reduce performance elsewhere?")
+    print(f"  Q4. Is it better used to assist another process?")
+    print(f"  STOP when recovery increases total system entropy.")
 
     print()
 
