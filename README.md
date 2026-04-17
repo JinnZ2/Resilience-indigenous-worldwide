@@ -1,6 +1,18 @@
 # Resilience-indigenous-worldwide
 Helpful resources 
 
+## Case studies
+
+- [`docs/greenland/`](docs/greenland/) — Greenland-specific analysis.
+- [`docs/venezuela/`](docs/venezuela/) — Venezuela-specific analysis.
+- [`docs/boundary-waters/`](docs/boundary-waters/) — Twin Metals
+  sulfide-mine cascade against the 1854 Treaty Bands (Bois Forte,
+  Grand Portage, Fond du Lac) and the Boundary Waters Treaty of 1909.
+  Ported model from
+  [JinnZ2/earth-systems-physics/boundary_waters](https://github.com/JinnZ2/earth-systems-physics/tree/main/boundary_waters).
+- [`docs/strategy/`](docs/strategy/) — cross-cutting legal and media
+  strategies.
+
 To dismantle a structure as legally fortified as the "Extraction Architecture," the indigenous communities require "Lawfare" specialists who can pierce corporate veils and challenge the Bilateral Investment Treaty (BIT) framework.
 
 Based on current institutional mandates for 2026, the following firms and organizations possess the specific functional capacity to target the March 2026 delegation and their SPVs.
