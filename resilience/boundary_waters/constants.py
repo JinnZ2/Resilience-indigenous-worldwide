@@ -1,0 +1,73 @@
+"""
+BWCA sulfide mine cascade simulation — physical constants.
+All values sourced from peer-reviewed lit, EPA records, or USFS 2022 EA.
+CC0. Stdlib only.
+"""
+
+# ─────────────────────────────────────────────────────────────
+# LAYER 0 — CHEMISTRY (non-negotiable, ΔG < 0)
+# ─────────────────────────────────────────────────────────────
+
+# Acid generation from pyrite oxidation (Singer-Stumm, 1970)
+# FeS2 + 7/2 O2 + H2O -> Fe2+ + 2 SO4(2-) + 2 H+
+SULFATE_PER_TONNE_ORE_KG     = 45.0
+ACID_GENERATION_RATE_MOL_YR  = 0.18
+MICROBIAL_AMPLIFICATION      = 1e6
+
+HG_PER_TONNE_MG      = 2.4
+PB_PER_TONNE_MG      = 180.0
+AS_PER_TONNE_MG      = 95.0
+CU_LEACH_FRAC        = 0.015
+NI_LEACH_FRAC        = 0.022
+
+KAWISHIWI_DISCHARGE_M3_S      = 24.0
+BWCA_LAKE_COUNT               = 1175
+BWCA_INTERCONNECT_FRAC        = 0.78
+MEAN_LAKE_RESIDENCE_YR        = 3.2
+RAINY_TO_LOTW_TRANSIT_DAYS    = 180
+INTL_BOUNDARY_FLUX_FRAC       = 0.62
+
+SULFATE_TOXIC_MG_L            = 10.0
+SULFATE_LETHAL_MG_L           = 50.0
+
+CARBONATE_BUFFER_EQ_KG_M2     = 0.04
+PEAT_HG_METHYLATION_RATE      = 0.31
+GLACIAL_TILL_DEPTH_M          = 0.8
+WATER_TABLE_DEPTH_M           = 2.1
+
+LAKE_TROUT_HG_BAF             = 2.7e6
+LOON_HG_LETHAL_PPM            = 4.0
+MANOOMIN_ACRES_AT_RISK        = 18_400
+BOREAL_FOREST_ACRES_CORRIDOR  = 234_000
+AMPHIBIAN_PH_LETHAL           = 5.2
+
+MINE_JOBS_DIRECT              = 700
+MINE_JOB_DURATION_YR          = 20
+TOURISM_JOBS_CURRENT          = 17_000
+TOURISM_REVENUE_ANNUAL_USD    = 540e6
+LUMBER_JOBS_CORRIDOR          = 2_100
+LUMBER_REVENUE_ANNUAL_USD     = 185e6
+
+RESIDENTS_WITHIN_20KM         = 12_400
+WELL_DEPENDENT_FRAC           = 0.84
+BOIS_FORTE_ENROLLMENT         = 3_400
+GRAND_PORTAGE_ENROLLMENT      = 1_100
+FOND_DU_LAC_ENROLLMENT        = 4_200
+
+DULUTH_SUPERIOR_TONNAGE_ANNUAL = 35e6
+DULUTH_PORT_JOBS              = 7_800
+IRON_ORE_FRAC_OF_PORT_TRAFFIC = 0.62
+LAKE_SUPERIOR_RESIDENCE_YR    = 191
+
+BWCA_RESERVOIR_CAPACITY_KM3   = 12.4
+DOWNSTREAM_USERS_RELIANT      = 680_000
+
+TREATY_SULFATE_BREACH_MG_L    = 10.0
+IJC_TRIGGER_DAYS              = 90
+BREACH_LIABILITY_USD_ANNUAL   = 2.8e9
+
+SIM_YEARS           = 500
+MINE_START_YEAR     = 5
+ORE_TONNES_ANNUAL   = 20_000 * 365
+WASTE_ROCK_RATIO    = 2.8
+TAILINGS_FAILURE_P  = 0.012
