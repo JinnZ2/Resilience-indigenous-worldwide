@@ -13,6 +13,75 @@ Helpful resources
 - [`docs/strategy/`](docs/strategy/) — cross-cutting legal and media
   strategies.
 
+## Computational modeling: `architecture/`
+
+Standalone, stdlib-only Python modules. Each runs with
+`python -m architecture.<module_name>` and prints a structured report.
+
+- **`audit_authority_scope.py`** — models audit authority as itself
+  scope-conditional. Higher tiers of government hold first right to
+  audit a community's crisis response only inside a declared resource
+  and time window; if they fail to exercise it, the next-tier-down
+  audit becomes the legal record.
+- **`biological_response_infrastructure.py`** — distributed-response
+  infrastructure modeled on biological immune/metabolic systems:
+  local nodes sense damage and respond immediately, central authority
+  validates afterward. Inverts the current permit-before-respond
+  pattern that lets local systems degrade while waiting for approval.
+- **`corporate_charter_scope_audit.py`** — treats corporate operating
+  privileges as scope-conditional: a charter is a conditional
+  permission, not a permanent grant. When a corporation refuses to
+  respond to a local crisis it has profited from, the community's
+  claim on its locally held resources supersedes the corporation's
+  disposal logic for the duration of the crisis.
+- **`hormuz_cascade_audit.py`** — thermodynamic + Earth-systems audit
+  of the Hormuz fertilizer cascade, testing whether the published
+  118M–225M excess-deaths claim is physically reachable. Calibrated
+  against Sudan 2024 and Ukraine 2023 mortality anchors; structural
+  ceiling sits at ~321M (30% of the 1.07B import-dependent population).
+- **`institutional_bottleneck_audit.py`** — names the regulatory
+  choke points (EPA 503, EU 86/278, MN 7080/7083, Codex, Manual
+  Scavenging Act, WHO sanitation framing) that block the closed-loop
+  N pathway. Quantifies lives-at-risk per month of regulatory
+  inaction and pre-rebuts six "we didn't know" institutional defenses.
+- **`monte_carlo_resilience_sim.py`** — stochastic comparison of
+  distributed vs centralized crisis-response architectures under
+  randomized scenarios. Same seed reproduces identical outcomes;
+  reports survival, infrastructure preservation, cascade failures,
+  trust, recovery time.
+- **`regulatory_cascade_crosslink.py`** — bridges the institutional
+  and cascade audits. Maps each regulatory choke point to its
+  contribution to the cascade's `vulnerable_absorption` parameter and
+  shows that single relaxations are invisible — the full regulatory
+  stack must move to bring mortality below the structural ceiling.
+- **`regulatory_scope_audit.py`** — audits regulations against their
+  declared operating envelope. Every rule was written for a specific
+  thermal, population, substrate, or infrastructure scope; when real
+  conditions exit that envelope, the rule is outside its scope and
+  enforcing it inverts the rule's original intent.
+- **`region_presets.py`** — pre-built `Village` configurations for
+  Greenland (coastal arctic), Venezuela (Orinoco basin), Burkina Faso
+  (Sahel), and the India delta. Lets `village_n_closure` run
+  out-of-box on regions the repository already covers.
+- **`substrate_damage_audit.py`** — flags when behavioral and
+  collapse-prediction models are trained on populations several
+  generations into institutional damage rather than baseline human
+  capacity. Encodes the cascade as falsifiable claims so measured
+  fragility is not misread as biological universal.
+- **`variance_pathway_templates.py`** — one-page emergency-variance
+  request drafts (legal basis, requested action, finding of fact,
+  calendar gate, safeguards) for each regulatory node named in
+  `institutional_bottleneck_audit`. Pre-drafted so the planting-
+  calendar deadline does not slip on paperwork.
+- **`village_n_closure.py`** — village-scale nutrient-closure toolkit.
+  Given population, planted crops, and locally available substrates,
+  computes N/P/K need vs supply, deficits, and a priority-ranked
+  dispatch sequence with composting/fermentation protocols.
+
+Tests pinning the cascade-mortality calibration (Sudan 2024,
+Ukraine 2023) live at `tests/test_cascade_audit.py`. Run with
+`python -m pytest tests/test_cascade_audit.py`.
+
 To dismantle a structure as legally fortified as the "Extraction Architecture," the indigenous communities require "Lawfare" specialists who can pierce corporate veils and challenge the Bilateral Investment Treaty (BIT) framework.
 
 Based on current institutional mandates for 2026, the following firms and organizations possess the specific functional capacity to target the March 2026 delegation and their SPVs.
