@@ -25,6 +25,14 @@ Standalone, stdlib-only Python modules. Each runs with
   Treaty, Svalbard Seed Vault, WHO 2006 sanitation guidelines, FAO
   Locust Watch / FEWS NET, Mesoamerican Biological Corridor — with
   citations and skeptical/central/optimistic plausibility ranges.
+- **`historical_analogue.py`** — inverts the cascade audit's output:
+  instead of a single mortality number, matches the current situation
+  in log-space against a famine corpus (Bengal 1943, Ireland, Great
+  Leap Forward, Ethiopia, North Korea, Somalia, Tigray, Yemen, Sudan,
+  2008, Ukraine 2022, Sahel 1972-74) and a cooperation corpus
+  (Montreal, Marshall Plan, Berlin Airlift, smallpox eradication, WFP,
+  ITPGRFA, Rhine, Wadden Sea, Mesoamerican Corridor). Every figure is
+  a documented historical range with citation.
 - **`audit_authority_scope.py`** — models audit authority as itself
   scope-conditional. Higher tiers of government hold first right to
   audit a community's crisis response only inside a declared resource
