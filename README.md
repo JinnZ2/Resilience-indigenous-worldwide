@@ -18,6 +18,13 @@ Helpful resources
 Standalone, stdlib-only Python modules. Each runs with
 `python -m architecture.<module_name>` and prints a structured report.
 
+- **`biome_cooperation_layer.py`** — models cross-border cooperation
+  as a fourth cascade lever (alongside variances, institutional
+  relaxation, and village closure). Seven channels anchored to real
+  historical analogues — Rhine ICPR, HELCOM Baltic, ITPGRFA Plant
+  Treaty, Svalbard Seed Vault, WHO 2006 sanitation guidelines, FAO
+  Locust Watch / FEWS NET, Mesoamerican Biological Corridor — with
+  citations and skeptical/central/optimistic plausibility ranges.
 - **`audit_authority_scope.py`** — models audit authority as itself
   scope-conditional. Higher tiers of government hold first right to
   audit a community's crisis response only inside a declared resource
