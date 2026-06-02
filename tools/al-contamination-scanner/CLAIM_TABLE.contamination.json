@@ -1,0 +1,97 @@
+{
+  "_schema": "contamination_claim_table_v1",
+  "_methodology": "Each claim is a falsifiable prediction. If field data or a model run refutes it, update the claim text and record the refutation -- do NOT retune the simulation to preserve the prediction. The simulation is a measurement instrument, not an argument.",
+  "_status_values": ["ACTIVE", "CONFIRMED_MODEL", "CONFIRMED_FIELD", "REFUTED_UPDATED"],
+
+  "claims": [
+
+    {
+      "id": "C1",
+      "status": "REFUTED_UPDATED",
+      "original_claim": "The region with the highest channel multiplier (exposure_multiplier()) will rank highest on EWRI, because the channel -- not the source contamination level -- is the primary injury driver.",
+      "original_reasoning": "Even a moderately contaminated batch becomes a human-injury event when it lands in a region with near-zero QC, high price pressure, and no buffer. Source severity is bounded by scrap carryover ranges; channel multiplier varies more widely and should dominate.",
+      "test": "Run scan (seed=1, n=20000). Check if argmax(exposure_multiplier) == argmax(EWRI).",
+      "test_result": {
+        "highest_channel_multiplier": "africa_subsaharan",
+        "multiplier_value": 3.57,
+        "highest_ewri": "cuba",
+        "ewri_value": 8.567
+      },
+      "refutation": "Sub-Saharan Africa has the highest channel multiplier (3.57) but ranks #2 on EWRI (7.43). Cuba ranks #1 (EWRI 8.57) with a lower multiplier (3.36) because its embargo-forced recycled_fraction=0.85 produces substantially more contaminated batches, and its medical/food product reliance weights are among the highest. Neither term universally dominates.",
+      "updated_claim": "EWRI is a compound of source severity (driven by recycled_fraction and product reliance) and channel (multiplier). A very high recycled fraction with extreme product reliance can outrank a higher-channel region with lower scrap content. Both terms must be assessed -- no single variable is sufficient.",
+      "update_date": "2026-06-02"
+    },
+
+    {
+      "id": "C2",
+      "status": "CONFIRMED_MODEL",
+      "claim": "Pb is the dominant injury vector for food_can and medical product classes in every modelled region, regardless of region ranking.",
+      "reasoning": "Pb threshold for food_can (0.010 wt%) and medical (0.005 wt%) is the lowest of any contaminant. Scrap carryover spans 0.001--0.30 wt% with a heavy upper tail. Even at the median, Pb exceedance probability is high enough to dominate the vector count.",
+      "test": "Run scan; inspect dominant_vector[food_can] and dominant_vector[medical] for all regions.",
+      "test_result": {
+        "food_can_dominant": {"cuba": "Pb", "africa_subsaharan": "Pb", "puerto_rico": "Pb", "india": "Pb", "us_inner_city": "Pb", "south_america": "Pb", "us_rural_poor": "Pb"},
+        "medical_dominant": {"cuba": "Pb", "africa_subsaharan": "Pb", "puerto_rico": "Pb", "india": "Pb", "us_inner_city": "Pb", "south_america": "Pb", "us_rural_poor": "Pb"}
+      },
+      "note": "CONFIRMED in model. Field confirmation requires XRF batch sampling. Model confirmation alone does not validate the carryover distribution -- it only shows internal consistency with the scrap_carryover ranges in contaminants.py. Replace ranges with measured values as they arrive.",
+      "falsification_condition": "Any region where Fe, Si, or Mn records a higher vector_count than Pb for food_can or medical over >= 10,000 batches."
+    },
+
+    {
+      "id": "C3",
+      "status": "CONFIRMED_MODEL",
+      "claim": "Mn is the dominant injury vector for the electrical product class in every modelled region.",
+      "reasoning": "Mn has the highest conductivity_penalty_per_0p1 (0.34% IACS per 0.1 wt%) and the lowest injury threshold for electrical (0.05 wt%). The scrap carryover range (0.05--0.80 wt%) means most batches exceed threshold.",
+      "test": "Run scan; inspect dominant_vector[electrical] for all regions.",
+      "test_result": {
+        "electrical_dominant": {"cuba": "Mn", "africa_subsaharan": "Mn", "puerto_rico": "Mn", "india": "Mn", "us_inner_city": "Mn", "south_america": "Mn", "us_rural_poor": "Mn"}
+      },
+      "note": "CONFIRMED in model. Mn threshold of 0.05 wt% for conductor-grade Al is tight; real 1xxx-series wire allows up to ~0.05 wt% Mn by spec (AA1350). If field data shows higher tolerance in practice, raise the threshold and re-run.",
+      "falsification_condition": "Any region where Fe or Si records a higher vector_count than Mn for electrical over >= 10,000 batches."
+    },
+
+    {
+      "id": "C4",
+      "status": "ACTIVE",
+      "claim": "The p95/mean EWRI ratio exceeds 1.30 for US inner-city and US rural poor regions, reflecting a heavier bad-batch tail than top-ranked regions.",
+      "reasoning": "Cuba and Sub-Saharan Africa have high baseline recycled_fraction, so even median batches are severely contaminated -- the tail is not much worse than the mean. US regions have lower recycled_fraction; most batches are mild, but a contaminated-scrap spike (Pb/Cd) lands on people with no QC or buffer. The tail event is disproportionately bad relative to the mean.",
+      "test": "Run scan (seed=1, n=20000). Compute ewri_p95 / ewri for us_inner_city and us_rural_poor. Assert > 1.30.",
+      "current_model_value": {
+        "us_inner_city": {"ewri": 2.952, "ewri_p95": 3.893, "ratio": 1.319},
+        "us_rural_poor": {"ewri": 2.786, "ewri_p95": 3.673, "ratio": 1.318},
+        "cuba_for_comparison": {"ewri": 8.567, "ewri_p95": 8.981, "ratio": 1.048}
+      },
+      "note": "Currently sits at 1.32, just above the 1.30 threshold. Sensitive to seed and n_batches. Retest at n=100000 across 10 seeds before treating as confirmed.",
+      "falsification_condition": "Ratio < 1.30 for either US region at n=100000 averaged across seeds 1-10."
+    },
+
+    {
+      "id": "C5",
+      "status": "ACTIVE",
+      "claim": "Structural class shows no dominant injury vector (recorded as '-') in any region with recycled_fraction <= 0.60, because structural thresholds are high enough that median scrap batches do not breach them.",
+      "reasoning": "Structural thresholds: Fe 0.70, Si 0.80, Cu 0.40, Mn 1.50, Zn 1.00 wt%. These are above the midpoint of most scrap_carryover ranges. Only high-recycled-fraction supply (rec >= ~0.75) generates enough batches above threshold to accumulate a dominant vector.",
+      "test": "Inspect dominant_vector[structural] for all regions. Assert '-' for any region with recycled_fraction <= 0.60.",
+      "current_model_value": {
+        "cuba_rec0.85": "Si",
+        "africa_subsaharan_rec0.55": "-",
+        "india_rec0.60": "-",
+        "south_america_rec0.50": "-",
+        "puerto_rico_rec0.55": "-",
+        "us_inner_city_rec0.45": "-",
+        "us_rural_poor_rec0.45": "-"
+      },
+      "note": "Holds in current model. Cuba (rec=0.85) does record Si as structural dominant. Boundary is between rec=0.60 (India, '-') and rec=0.85 (Cuba, 'Si'). Claim should be retested if any region is updated to rec >= 0.70.",
+      "falsification_condition": "Any region with recycled_fraction <= 0.60 records a non-'-' structural dominant vector."
+    },
+
+    {
+      "id": "C6",
+      "status": "ACTIVE",
+      "claim": "Raising Cuba's qc_capacity from 0.20 to 0.40 (plausible with a donated XRF program) reduces its EWRI by more than 15% without changing any other parameter.",
+      "reasoning": "qc_capacity enters the channel multiplier as (0.5 + (1 - qc)). Cuba at qc=0.20 contributes factor 1.30; at qc=0.40 it contributes 1.10. Multiplier scales all batch EWRI samples. The reduction should propagate linearly through the mean.",
+      "test": "Run scan with Cuba qc_capacity overridden to 0.40 via --local overlay. Compare EWRI to baseline.",
+      "expected": ">15% EWRI reduction for Cuba",
+      "falsification_condition": "EWRI reduction < 15% -- would imply the multiplier contribution of qc is smaller than modelled, possibly because another channel variable (price_pressure=0.95, buffer=0.08) is the binding constraint."
+    }
+
+  ]
+}
