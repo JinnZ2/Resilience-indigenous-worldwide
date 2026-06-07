@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Al Contamination Hotspot Scanner — CC0</title>
+<style>
+  /* ----- INDUSTRIAL INSTRUMENT PANEL. offline. phone-first. ----- */
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+
+  :root{
+    --bg:#0b0e0d;
+    --panel:#121715;
+    --panel2:#161d1a;
+    --line:#26302c;
+    --ink:#d7e0db;
+    --dim:#7c8b84;
+    --acid:#b6ff3a;       /* signal accent */
+    --amber:#ffb52e;
+    --red:#ff4d4d;
+    --green:#3ad17a;
+    --grid:rgba(182,255,58,0.04);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',sans-serif;-webkit-font-smoothing:antialiased}
+  body{
+    background-image:
+      linear-gradient(var(--grid) 1px,transparent 1px),
+      linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:42px 42px;
+    padding:14px 12px 60px;max-width:920px;margin:0 auto;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace}
+  h1{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:19px;letter-spacing:-0.4px;line-height:1.15}
+  h1 .acid{color:var(--acid)}
+  .sub{color:var(--dim);font-family:'IBM Plex Mono',monospace;font-size:11px;margin-top:6px;letter-spacing:0.3px}
+  header{border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:16px;position:relative}
+  header::after{content:"CC0";position:absolute;right:0;top:0;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--acid);border:1px solid var(--line);padding:2px 6px;letter-spacing:1px}
+
+  .tabs{display:flex;gap:0;margin-bottom:16px;border:1px solid var(--line)}
+  .tab{flex:1;padding:11px 8px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+    color:var(--dim);background:var(--panel);cursor:pointer;border-right:1px solid var(--line);user-select:none;letter-spacing:0.3px;transition:.15s}
+  .tab:last-child{border-right:none}
+  .tab.on{color:var(--bg);background:var(--acid)}
+  .tab:not(.on):active{background:var(--panel2)}
+
+  section{display:none}
+  section.on{display:block;animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+  .panel{background:var(--panel);border:1px solid var(--line);padding:14px;margin-bottom:14px}
+  .panel-h{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--acid);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+  .panel-h .note{color:var(--dim);font-weight:400;letter-spacing:0.3px}
+
+  /* control row */
+  .ctl{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .ctl label{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--dim);flex:0 0 110px}
+  .ctl input[type=range]{flex:1;accent-color:var(--acid);height:3px}
+  .ctl .val{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink);flex:0 0 48px;text-align:right}
+  button.run{width:100%;padding:13px;background:var(--acid);color:#0b0e0d;border:none;font-family:'IBM Plex Mono',monospace;
+    font-weight:700;font-size:14px;letter-spacing:1px;cursor:pointer;text-transform:uppercase}
+  button.run:active{transform:translateY(1px)}
+  button.ghost{background:transparent;color:var(--dim);border:1px solid var(--line);padding:8px 12px;font-family:'IBM Plex Mono',monospace;font-size:11px;cursor:pointer}
+
+  /* hotspot bars */
+  .bar-row{margin-bottom:11px}
+  .bar-top{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:12px;margin-bottom:4px}
+  .bar-top .nm{color:var(--ink);font-weight:500}
+  .bar-top .sc{color:var(--acid)}
+  .bar-track{height:14px;background:var(--panel2);border:1px solid var(--line);position:relative;overflow:hidden}
+  .bar-fill{height:100%;background:linear-gradient(90deg,var(--acid),var(--amber));transition:width .5s cubic-bezier(.2,.8,.2,1)}
+  .bar-fill.hi{background:linear-gradient(90deg,var(--amber),var(--red))}
+  .bar-p95{position:absolute;top:-2px;bottom:-2px;width:2px;background:#fff;opacity:.55}
+  .bar-meta{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--dim);margin-top:3px;letter-spacing:0.2px}
+
+  table{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:11px;margin-top:6px}
+  th,td{text-align:left;padding:6px 5px;border-bottom:1px solid var(--line)}
+  th{color:var(--dim);font-weight:600;letter-spacing:0.4px;font-size:10px;text-transform:uppercase}
+  td .v{color:var(--acid)}
+
+  /* XRF input grid */
+  .xrf-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}
+  .xrf-cell{background:var(--panel2);border:1px solid var(--line);padding:8px 10px}
+  .xrf-cell label{display:block;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--dim);margin-bottom:4px}
+  .xrf-cell input{width:100%;background:transparent;border:none;border-bottom:1px solid var(--line);color:var(--acid);
+    font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:600;padding:3px 0;outline:none}
+  .xrf-cell input:focus{border-bottom-color:var(--acid)}
+  .xrf-unit{font-size:9px;color:var(--dim);float:right;margin-top:6px}
+
+  .verdict{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:4px}
+  .vc{border:1px solid var(--line);padding:11px;background:var(--panel2);position:relative;overflow:hidden}
+  .vc .pc{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:0.6px;text-transform:uppercase}
+  .vc .vd{font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:700;margin-top:5px;letter-spacing:0.5px}
+  .vc .vx{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--dim);margin-top:5px;line-height:1.5;min-height:26px}
+  .vc.GO .vd{color:var(--green)} .vc.GO{border-color:rgba(58,209,122,.4)}
+  .vc.CAUTION .vd{color:var(--amber)} .vc.CAUTION{border-color:rgba(255,181,46,.4)}
+  .vc.STOP .vd{color:var(--red)} .vc.STOP{border-color:rgba(255,77,77,.5)}
+  .vc.STOP::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(255,77,77,.04) 8px,rgba(255,77,77,.04) 16px);pointer-events:none}
+
+  .proto{font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.7;color:var(--dim)}
+  .proto .k{color:var(--acid)}
+  .proto .stop{color:var(--red);font-weight:600}
+  .tier{border-left:2px solid var(--line);padding-left:10px;margin:8px 0}
+  .tier .t{color:var(--ink);font-weight:600}
+  .cost{color:var(--amber)}
+
+  .legend{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--dim);line-height:1.7;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+  .legend b{color:var(--ink)}
+  footer{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--dim);text-align:center;margin-top:24px;line-height:1.7}
+  footer .acid{color:var(--acid)}
+  .region-select{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);
+    font-family:'IBM Plex Mono',monospace;font-size:13px;padding:9px;margin-bottom:12px;outline:none}
+</style>
+</head>
+<body>
+<header>
+  <h1>AL CONTAMINATION <span class="acid">HOTSPOT SCANNER</span></h1>
+  <div class="sub">recycled-aluminium injury model · stdlib-equivalent · runs offline · CC0 public domain</div>
+</header>
+
+<div class="tabs">
+  <div class="tab on" data-s="scan">HOTSPOT SCAN</div>
+  <div class="tab" data-s="test">FIELD TEST</div>
+  <div class="tab" data-s="proto">PROTOCOL</div>
+</div>
+
+<!-- ============ SCAN ============ -->
+<section class="scan on">
+  <div class="panel">
+    <div class="panel-h">MONTE CARLO PARAMETERS <span class="note">batches × regions → EWRI</span></div>
+    <div class="ctl"><label>batches</label><input type="range" id="batches" min="2000" max="40000" step="2000" value="12000"><span class="val mono" id="batchesV">12000</span></div>
+    <div class="ctl"><label>seed</label><input type="range" id="seed" min="1" max="40" step="1" value="1"><span class="val mono" id="seedV">1</span></div>
+    <button class="run" id="runScan">▶ RUN SCAN</button>
+  </div>
+
+  <div class="panel">
+    <div class="panel-h">EXPOSURE-WEIGHTED RISK INDEX <span class="note" id="scanNote">—</span></div>
+    <div id="bars"></div>
+    <div class="legend">
+      <b>EWRI</b> = batch injury severity × product reliance × regional channel multiplier.<br>
+      white tick = <b>p95</b> (bad-batch tail — the real injury event).<br>
+      channel = import_dependency × (1−qc) × price_pressure × (1−buffer).
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-h">DOMINANT INJURY VECTOR <span class="note">per product class</span></div>
+    <div style="overflow-x:auto"><table id="vectorTable"></table></div>
+  </div>
+</section>
+
+<!-- ============ FIELD TEST ============ -->
+<section class="test">
+  <div class="panel">
+    <div class="panel-h">XRF SAMPLE INPUT <span class="note">enter measured wt%</span></div>
+    <div class="xrf-grid" id="xrfGrid"></div>
+    <button class="run" id="evalBtn">▶ EVALUATE SAMPLE</button>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button class="ghost" id="loadDirty">load dirty-scrap example</button>
+      <button class="ghost" id="loadClean">load primary example</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-h">VERDICT <span class="note">per product class</span></div>
+    <div class="verdict" id="verdict"></div>
+    <div class="bar-meta" style="margin-top:12px" id="iacsOut">conductivity: —</div>
+    <div class="legend" id="toxNote"></div>
+  </div>
+</section>
+
+<!-- ============ PROTOCOL ============ -->
+<section class="proto-sec">
+  <div class="panel">
+    <div class="panel-h">FIELD ESCALATION PROTOCOL <span class="note">cheapest test first</span></div>
+    <div class="proto">
+      <div class="tier">
+        <div class="t">TIER 1 — spot test <span class="cost">$0</span> · minutes</div>
+        <span class="k">visual</span>: bright uniform silver = lower risk. grey / mottled / dark oxide,
+        visible inclusions, solder or paint residue = high carryover risk.<br>
+        <span class="k">magnet</span>: aluminium is non-magnetic. ANY pull = steel/Fe in the melt → embrittlement vector.<br>
+        <span class="k">acid spot</span> (vinegar, 10 min on inner surface): darkening / pitting = reactive Cu/Pb.
+      </div>
+      <div class="tier">
+        <div class="t">TIER 2 — DC conductivity <span class="cost">~$50</span></div>
+        4-point or cheap meter on a wire sample. Decisive for <span class="k">ELECTRICAL</span> only.<br>
+        IACS &lt; 55% = <span class="stop">STOP</span> (below conductor floor). 55–58.5% = derate / escalate.
+      </div>
+      <div class="tier">
+        <div class="t">TIER 3 — handheld XRF <span class="cost">~$1.5–3k</span></div>
+        quantitative per-element wt% → full injury readout. <span class="stop">MANDATORY before any food or medical use.</span>
+      </div>
+      <div style="margin-top:14px;padding:10px;border:1px solid var(--red);background:rgba(255,77,77,.05)">
+        <span class="stop">HARD RULE.</span> Pb and Cd are <b>invisible</b> to tier-1 tests.
+        A clean-looking batch can carry lethal lead from painted or soldered scrap.
+        Food / medical use → tier-3 XRF, no exceptions.
+      </div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-h">INJURY VECTOR MAP</div>
+    <table id="thresholdTable"></table>
+  </div>
+</section>
+
+<footer>
+  <span class="acid">JinnZ2 namespace · CC0</span><br>
+  model is meant to be corrected by the people running it.<br>
+  refuted claim → update the claim, never retune the sim.
+</footer>
+
+<script>
+/* =====================================================================
+   PORTED MODEL  -- identical physics to the Python package, in JS.
+   stdlib-equivalent: no external libraries, runs offline.
+   ===================================================================== */
+
+const FOOD="food_can", ELEC="electrical", MED="medical", STRUCT="structural";
+const CLASSES=[FOOD,ELEC,MED,STRUCT];
+const CLASS_LABEL={[FOOD]:"food_can",[ELEC]:"electrical",[MED]:"medical",[STRUCT]:"structural"};
+
+const PURE_IACS=61.0;
+
+// symbol: {thr:{class:wt%}, condPen (per 0.1wt%), scrap:[lo,hi], primary}
+const C={
+  Fe:{thr:{[FOOD]:0.35,[ELEC]:0.20,[MED]:0.15,[STRUCT]:0.70},condPen:0.20,scrap:[0.20,0.90],primary:0.08},
+  Si:{thr:{[FOOD]:0.50,[ELEC]:0.25,[MED]:0.30,[STRUCT]:0.80},condPen:0.10,scrap:[0.15,1.20],primary:0.06},
+  Cu:{thr:{[FOOD]:0.10,[ELEC]:0.15,[MED]:0.05,[STRUCT]:0.40},condPen:0.04,scrap:[0.05,0.60],primary:0.01},
+  Pb:{thr:{[FOOD]:0.010,[ELEC]:5.0,[MED]:0.005,[STRUCT]:5.0},condPen:0.02,scrap:[0.001,0.30],primary:0.0005},
+  Cd:{thr:{[FOOD]:0.005,[ELEC]:5.0,[MED]:0.003,[STRUCT]:5.0},condPen:0.03,scrap:[0.0005,0.05],primary:0.0002},
+  Mn:{thr:{[FOOD]:1.50,[ELEC]:0.05,[MED]:0.40,[STRUCT]:1.50},condPen:0.34,scrap:[0.05,0.80],primary:0.01},
+  Zn:{thr:{[FOOD]:0.30,[ELEC]:0.30,[MED]:0.15,[STRUCT]:1.00},condPen:0.02,scrap:[0.05,0.50],primary:0.01},
+};
+const SYMS=Object.keys(C);
+
+function iacs(comp){let v=PURE_IACS;for(const s in comp){const c=C[s];if(!c)continue;v-=c.condPen*(comp[s]/0.1);}return Math.max(v,0);}
+
+function activeVectors(comp,pc){
+  const out=[];
+  for(const s in comp){const c=C[s];if(!c)continue;const t=c.thr[pc];if(t==null)continue;
+    if(comp[s]>t)out.push([s,comp[s],t,comp[s]/t]);}
+  out.sort((a,b)=>b[3]-a[3]);return out;
+}
+function severity(comp,pc){
+  const v=activeVectors(comp,pc);
+  if(v.length===0){
+    if(pc===ELEC){const def=Math.max(0,(PURE_IACS-2.0)-iacs(comp))/PURE_IACS;return Math.min(def,1);}
+    return 0;
+  }
+  let s=0;for(const[,, ,r]of v)s+=Math.min(r-1.0,3.0);
+  return Math.min(s,4.0)/4.0;
+}
+
+// ---- regions ----
+const REGIONS={
+  cuba:{name:"Cuba",imp:0.75,qc:0.20,price:0.95,buf:0.08,rec:0.85,
+    rel:{[FOOD]:0.9,[ELEC]:0.8,[MED]:0.95,[STRUCT]:0.5}},
+  africa:{name:"Sub-Saharan Africa",imp:0.85,qc:0.15,price:0.90,buf:0.10,rec:0.55,
+    rel:{[FOOD]:0.8,[ELEC]:0.7,[MED]:0.9,[STRUCT]:0.4}},
+  pr:{name:"Puerto Rico",imp:0.90,qc:0.30,price:0.80,buf:0.15,rec:0.55,
+    rel:{[FOOD]:0.85,[ELEC]:0.7,[MED]:0.8,[STRUCT]:0.5}},
+  india:{name:"India",imp:0.45,qc:0.35,price:0.80,buf:0.25,rec:0.60,
+    rel:{[FOOD]:0.7,[ELEC]:0.8,[MED]:0.7,[STRUCT]:0.6}},
+  innercity:{name:"US Inner-City Poor",imp:0.60,qc:0.40,price:0.75,buf:0.18,rec:0.45,
+    rel:{[FOOD]:0.85,[ELEC]:0.6,[MED]:0.5,[STRUCT]:0.4}},
+  samerica:{name:"South America",imp:0.55,qc:0.35,price:0.70,buf:0.30,rec:0.50,
+    rel:{[FOOD]:0.8,[ELEC]:0.6,[MED]:0.6,[STRUCT]:0.5}},
+  rural:{name:"US Rural Poor",imp:0.55,qc:0.35,price:0.70,buf:0.20,rec:0.45,
+    rel:{[FOOD]:0.8,[ELEC]:0.7,[MED]:0.45,[STRUCT]:0.5}},
+};
+function mult(r){return (0.5+(1-r.qc))*(0.5+r.price)*(0.5+(1-r.buf))*(0.5+r.imp);}
+
+// ---- seeded RNG (mulberry32) ----
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+
+function sampleBatch(rng,rec){
+  const comp={};
+  for(const s of SYMS){const c=C[s];const[lo,hi]=c.scrap;let scrap;
+    if(s==="Pb"||s==="Cd"){let u=Math.pow(rng(),3);scrap=lo+(hi-lo)*u;if(rng()<1/12)scrap=lo+(hi-lo)*(0.6+0.4*rng());}
+    else scrap=lo+(hi-lo)*rng();
+    comp[s]=(1-rec)*c.primary+rec*scrap;}
+  return comp;
+}
+
+function runRegion(rng,r,n){
+  const pp={};CLASSES.forEach(c=>pp[c]=0);
+  const vc={};CLASSES.forEach(c=>vc[c]={});
+  let iacsAcc=0;const samples=[];const m=mult(r);
+  for(let i=0;i<n;i++){
+    const comp=sampleBatch(rng,r.rec);iacsAcc+=iacs(comp);
+    let ew=0;
+    for(const pc of CLASSES){const sv=severity(comp,pc);pp[pc]+=sv;ew+=sv*(r.rel[pc]||0);
+      const v=activeVectors(comp,pc);if(v.length){const t=v[0][0];vc[pc][t]=(vc[pc][t]||0)+1;}}
+    samples.push(ew*m);
+  }
+  samples.sort((a,b)=>a-b);const mean=samples.reduce((a,b)=>a+b,0)/n;
+  const p95=samples[Math.min(n-1,Math.floor(0.95*n))];
+  const perP={};CLASSES.forEach(c=>perP[c]=pp[c]/n);
+  const dom={};CLASSES.forEach(c=>{const e=Object.entries(vc[c]);dom[c]=e.length?e.sort((a,b)=>b[1]-a[1])[0][0]:"-";});
+  return{name:r.name,ewri:mean,p95,perP,dom,iacs:iacsAcc/n,m};
+}
+
+function runScan(n,seed){
+  const rng=mulberry32(seed*2654435761>>>0);
+  const res=Object.values(REGIONS).map(r=>runRegion(rng,r,n));
+  res.sort((a,b)=>b.ewri-a.ewri);return res;
+}
+
+/* ===================== UI WIRING ===================== */
+const $=s=>document.querySelector(s);
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+  t.classList.add('on');
+  const s=t.dataset.s;
+  $('.scan').classList.toggle('on',s==='scan');
+  $('.test').classList.toggle('on',s==='test');
+  $('.proto-sec').classList.toggle('on',s==='proto');
+});
+$('#batches').oninput=e=>$('#batchesV').textContent=e.target.value;
+$('#seed').oninput=e=>$('#seedV').textContent=e.target.value;
+
+function renderScan(){
+  const n=+$('#batches').value, seed=+$('#seed').value;
+  const res=runScan(n,seed);
+  const maxE=Math.max(...res.map(r=>r.p95));
+  $('#scanNote').textContent=`${n.toLocaleString()} batches · seed ${seed}`;
+  $('#bars').innerHTML=res.map((r,i)=>{
+    const w=(r.ewri/maxE)*100, p=(r.p95/maxE)*100, hi=r.ewri>maxE*0.55?'hi':'';
+    return `<div class="bar-row">
+      <div class="bar-top"><span class="nm">${String(i+1).padStart(2,'0')} · ${r.name}</span><span class="sc">${r.ewri.toFixed(2)}</span></div>
+      <div class="bar-track"><div class="bar-fill ${hi}" style="width:${w}%"></div><div class="bar-p95" style="left:${p}%"></div></div>
+      <div class="bar-meta">p95 ${r.p95.toFixed(2)} · channel ×${r.m.toFixed(2)} · IACS ${r.iacs.toFixed(1)}%</div>
+    </div>`;}).join('');
+  let th=`<tr><th>region</th>`+CLASSES.map(c=>`<th>${CLASS_LABEL[c].replace('_','<br>')}</th>`).join('')+`</tr>`;
+  th+=res.map(r=>`<tr><td>${r.name}</td>`+CLASSES.map(c=>`<td><span class="v">${r.dom[c]}</span> ${r.perP[c].toFixed(2)}</td>`).join('')+`</tr>`).join('');
+  $('#vectorTable').innerHTML=th;
+}
+$('#runScan').onclick=renderScan;
+
+/* ----- field test ----- */
+const xrfState={};SYMS.forEach(s=>xrfState[s]=C[s].primary);
+function buildXrf(){
+  $('#xrfGrid').innerHTML=SYMS.map(s=>`<div class="xrf-cell">
+    <label>${s} · ${({Fe:'iron',Si:'silicon',Cu:'copper',Pb:'lead',Cd:'cadmium',Mn:'manganese',Zn:'zinc'})[s]}</label>
+    <input type="number" step="0.001" min="0" data-sym="${s}" value="${xrfState[s]}"><span class="xrf-unit">wt%</span>
+  </div>`).join('');
+  $('#xrfGrid').querySelectorAll('input').forEach(inp=>inp.oninput=e=>{xrfState[e.target.dataset.sym]=parseFloat(e.target.value)||0;});
+}
+const INGEST=[FOOD,MED], TOXIC=new Set(["Pb","Cd","Cu"]);
+function verdictXRF(comp,pc){
+  const sv=severity(comp,pc), v=activeVectors(comp,pc);
+  if(INGEST.includes(pc)){
+    if(v.some(x=>TOXIC.has(x[0])))return["STOP",sv,v];
+    if(sv>0.25)return["STOP",sv,v];if(sv>0.05)return["CAUTION",sv,v];return["GO",sv,v];
+  }
+  if(pc===ELEC){const ic=iacs(comp);if(ic<55||sv>0.5)return["STOP",sv,v];if(ic<58.5||sv>0.15)return["CAUTION",sv,v];return["GO",sv,v];}
+  if(sv>0.6)return["STOP",sv,v];if(sv>0.25)return["CAUTION",sv,v];return["GO",sv,v];
+}
+function renderVerdict(){
+  const comp={...xrfState};
+  $('#verdict').innerHTML=CLASSES.map(pc=>{
+    const[vd,sv,v]=verdictXRF(comp,pc);
+    const tag=v.length?v.slice(0,3).map(x=>`${x[0]}×${x[3].toFixed(1)}`).join(' '):'within thresholds';
+    return `<div class="vc ${vd}"><div class="pc">${CLASS_LABEL[pc]}</div><div class="vd">${vd}</div><div class="vx">${tag}</div></div>`;
+  }).join('');
+  const ic=iacs(comp);
+  $('#iacsOut').innerHTML=`conductivity: <span style="color:var(--acid)">${ic.toFixed(1)}% IACS</span> (conductor floor 55% · pure Al 61%)`;
+  const pb=comp.Pb||0, cd=comp.Cd||0;
+  if(pb>0.010||cd>0.005){
+    $('#toxNote').innerHTML=`<span style="color:var(--red);font-weight:600">⚠ INGESTION HAZARD</span> — Pb ${pb.toFixed(3)} / Cd ${cd.toFixed(3)} wt%. invisible to tier-1. do not use for food or medical.`;
+  } else $('#toxNote').innerHTML=`Pb/Cd below food-contact thresholds in this sample. confirm with XRF — tier-1 cannot see them.`;
+}
+$('#evalBtn').onclick=renderVerdict;
+$('#loadDirty').onclick=()=>{Object.assign(xrfState,{Fe:0.6,Si:0.7,Cu:0.3,Pb:0.05,Cd:0.01,Mn:0.3,Zn:0.2});buildXrf();renderVerdict();};
+$('#loadClean').onclick=()=>{SYMS.forEach(s=>xrfState[s]=C[s].primary);buildXrf();renderVerdict();};
+
+/* ----- threshold map table ----- */
+function renderThresholds(){
+  let h=`<tr><th>elem</th>`+CLASSES.map(c=>`<th>${CLASS_LABEL[c].replace('_',' ')}</th>`).join('')+`<th>scrap range</th></tr>`;
+  h+=SYMS.map(s=>{const c=C[s];return `<tr><td><span class="v">${s}</span></td>`+
+    CLASSES.map(pc=>`<td>${c.thr[pc]>=5?'—':c.thr[pc]}</td>`).join('')+
+    `<td>${c.scrap[0]}–${c.scrap[1]}</td></tr>`;}).join('');
+  $('#thresholdTable').innerHTML=h+`<tr><td colspan="6" style="color:var(--dim);padding-top:8px">thresholds in wt% · "—" = injury vector not relevant for that class</td></tr>`;
+}
+
+/* init */
+buildXrf();renderVerdict();renderScan();renderThresholds();
+</script>
+</body>
+</html>
