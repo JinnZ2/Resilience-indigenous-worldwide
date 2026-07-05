@@ -1,0 +1,39 @@
+# ABM configuration for Claim 3: elder survival advantage
+# All values are dimensionless or in simulation-years.
+
+simulation:
+  n_generations: 1000
+  population_size: 200          # agents per group
+  n_runs: 30                    # independent runs per condition (for statistics)
+  rng_seed: 42
+
+agents:
+  max_age: 80                   # simulation-years
+  reproductive_age_min: 15
+  reproductive_age_max: 45
+  elder_threshold: 55           # elder = above this age
+  base_fertility: 0.04          # probability of offspring per year per adult
+  base_mortality: 0.015         # annual base mortality
+
+knowledge:
+  half_life_years: 12           # knowledge decays this fast without transmission
+  elder_transmission_rate: 0.30 # prob per year elder transmits to a younger agent
+  knowledge_survival_bonus: 0.60 # max mortality reduction from high group knowledge (0..1)
+  initial_knowledge: 1.0        # normalized starting knowledge
+
+environment:
+  shock_probability: 0.05       # annual probability of an environmental shock
+  shock_severity: 0.40          # fraction of unknowing agents who die in a shock
+  shock_mitigation_by_knowledge: true  # knowledge reduces shock mortality
+
+conditions:
+  group_a:                      # elders valued
+    elder_survival_weight: 1.0  # normal survival
+    knowledge_transfer_active: true
+  group_b:                      # elders discarded
+    elder_survival_weight: 0.0  # elders die at 55 (discarded)
+    knowledge_transfer_active: false
+
+output:
+  results_dir: results/
+  survival_threshold_advantage: 0.30   # 30% survival advantage = claim supported

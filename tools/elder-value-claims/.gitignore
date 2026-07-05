@@ -1,0 +1,9 @@
+# generated results — not source
+results_combined.json
+claim1-age-bias/results/*.json
+claim2-reproductive-logic/results/*.json
+claim3-agent-model/results/*.json
+claim4-narrative-compression/results/*.json
+claim5-cross-cultural/results/*.json
+# eHRAF corpus is field data, not committed here
+claim5-cross-cultural/eHRAF_corpus.json
