@@ -11,6 +11,7 @@
 | 3: Elder survival advantage | sim run | FALSIFIED (params) | both groups extinct; shock regime too aggressive for 200-agent groups over 1000 gen |
 | 4: Narrative incompressibility | sim run | FALSIFIED (sim) | keyword-overlap proxy underpowered; needs real human evaluators |
 | 5: Elder value cross-cultural | seed run | FALSIFIED (seed) | ratio 2.75x on 16-passage seed; needs real eHRAF corpus for 10x threshold |
+| 6: Protector-gender bias | seed run | SUPPORTED (seed) | Test A: male-clustered (delta=0.022). Test B: cultural 65% male / biological 95% female; register gap=0.60 |
 
 ---
 

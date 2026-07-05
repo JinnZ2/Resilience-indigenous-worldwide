@@ -13,6 +13,7 @@ CLAIMS = {
     "2": ("claim2-reproductive-logic",  "utility_model",         "run"),
     "3": ("claim3-agent-model",         "abm",                   "run"),
     "4": ("claim4-narrative-compression","evaluator",            "run"),
+    "6": ("claim6-protector-gender-bias","scorer",               "run"),
     "5": ("claim5-cross-cultural",      "co_occurrence_analysis","run"),
 }
 

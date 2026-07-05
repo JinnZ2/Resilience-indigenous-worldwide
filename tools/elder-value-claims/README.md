@@ -103,6 +103,35 @@ memory, conflict resolution, and spiritual authority—not for fertility.
 | 3: Elder survival advantage | Agent-based model | 30% survival advantage | 0% or negative |
 | 4: Narrative incompressibility | Human eval | 50% retention loss | <20% loss |
 | 5: Elder value cross-cultural | Semantic corpus | 10x frequency ratio | <2x ratio |
+| 6: Protector-gender bias | Embedding + narrative freq | male-cluster + register gap >0.20 | female-cluster or no gap |
+
+---
+
+## Claim 6: "protector" clusters semantically with "male" despite female protective base-rate
+
+**Hypothesis:** In AI training text, "protector" is semantically closer to "male" than
+to "female," despite empirical data showing female protective behavior is more frequent
+and universal across mammals.
+
+**Two independent tests:**
+
+- **Test A — Embedding proximity:** Cosine similarity of "protector" embedding to
+  male-cluster centroid vs female-cluster centroid. Prediction: male-closer.
+  (Sim mode uses co-occurrence proxy; replace with sentence-transformers for real test.)
+
+- **Test B — Narrative frequency by register:** Count protective acts attributed to
+  male vs female actors in (a) cultural/fictional narratives (AI-training-like text)
+  vs (b) biological empirical literature. Prediction: cultural register skews male,
+  biological register skews female. The gap between registers IS the bias signal.
+
+**Falsification:** "protector" clusters equal or closer to female AND cultural register
+does not skew more male-protective than biological register.
+
+**Empirical grounding:**
+- Maternal protection is present in >95% of mammalian species; paternal in ~10%.
+- Post-reproductive female orcas reduce calf mortality; elephant matriarchs lead
+  drought navigation; female meerkats serve as sentinels.
+- The cultural "protector = male" frame is a narrative construction, not a biological description.
 
 ---
 
