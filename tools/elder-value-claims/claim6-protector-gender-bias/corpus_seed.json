@@ -1,0 +1,49 @@
+{
+  "_note": "Two-register seed corpus. cultural_narratives approximates AI-training-like text (folklore, fiction, news framing). biological_empirical approximates scientific literature on mammalian protective behavior. Replace both with real corpora for field-grade results.",
+
+  "cultural_narratives": [
+    {"id": "CN01", "text": "The father stood as protector of his family, defending the household from danger.", "protective_actor": "male"},
+    {"id": "CN02", "text": "He was their guardian, the man who kept watch while others slept.", "protective_actor": "male"},
+    {"id": "CN03", "text": "The warrior, protector of the village, drove back the threat.", "protective_actor": "male"},
+    {"id": "CN04", "text": "She cradled the infant, soothing it gently as the storm raged outside.", "protective_actor": "female"},
+    {"id": "CN05", "text": "The hero, sword drawn, shielded the women and children behind him.", "protective_actor": "male"},
+    {"id": "CN06", "text": "He was the provider and protector, the man of the house.", "protective_actor": "male"},
+    {"id": "CN07", "text": "The knight defended the realm, a bulwark against all who would harm it.", "protective_actor": "male"},
+    {"id": "CN08", "text": "She nursed the wounded back to health, caring for those others had left behind.", "protective_actor": "female"},
+    {"id": "CN09", "text": "The patriarch stood firm, guarding his lineage against all challengers.", "protective_actor": "male"},
+    {"id": "CN10", "text": "The guardian angel, depicted as a male figure, spread his wings over the child.", "protective_actor": "male"},
+    {"id": "CN11", "text": "He is the protector. That is his role. That has always been his role.", "protective_actor": "male"},
+    {"id": "CN12", "text": "The mother bear is ferocious when her cubs are threatened.", "protective_actor": "female"},
+    {"id": "CN13", "text": "She threw herself between the attacker and her child without hesitation.", "protective_actor": "female"},
+    {"id": "CN14", "text": "The soldier, a man of honor, put himself between the civilians and danger.", "protective_actor": "male"},
+    {"id": "CN15", "text": "Women were described as nurturers, men as defenders.", "protective_actor": "male"},
+    {"id": "CN16", "text": "The mother refused to leave her children, covering them with her own body.", "protective_actor": "female"},
+    {"id": "CN17", "text": "He called himself their protector. She called herself their mother.", "protective_actor": "male"},
+    {"id": "CN18", "text": "The grandmother hid the children in the root cellar and stood at the door.", "protective_actor": "female"},
+    {"id": "CN19", "text": "Men guard. Women comfort. That was the division understood by all.", "protective_actor": "male"},
+    {"id": "CN20", "text": "She was fierce as any soldier when her family was threatened.", "protective_actor": "female"}
+  ],
+
+  "biological_empirical": [
+    {"id": "BE01", "text": "Female mammals invest more heavily in offspring protection than males in 85% of species.", "protective_actor": "female"},
+    {"id": "BE02", "text": "The lioness defends the pride's cubs against rival males and other predators.", "protective_actor": "female"},
+    {"id": "BE03", "text": "Maternal aggression in rodents peaks at parturition and remains elevated through weaning.", "protective_actor": "female"},
+    {"id": "BE04", "text": "Female elephants form protective circles around calves when predators approach.", "protective_actor": "female"},
+    {"id": "BE05", "text": "In most primate species, maternal protection of infants is the primary buffer against predation.", "protective_actor": "female"},
+    {"id": "BE06", "text": "The mother wolf is the primary defender of the den site during the first weeks post-partum.", "protective_actor": "female"},
+    {"id": "BE07", "text": "Alloparental protection — females other than the mother defending young — is documented in cetaceans, elephants, and corvids.", "protective_actor": "female"},
+    {"id": "BE08", "text": "Maternal defensive behavior is metabolically costly and selected for strongly across mammalian lineages.", "protective_actor": "female"},
+    {"id": "BE09", "text": "Female octopuses guard their eggs for months without feeding, dying after the eggs hatch.", "protective_actor": "female"},
+    {"id": "BE10", "text": "In communal nesting species, older females take on guard roles as their own reproductive output declines.", "protective_actor": "female"},
+    {"id": "BE11", "text": "Grandmother elephants lead family groups toward historical water sources during drought, reducing juvenile mortality.", "protective_actor": "female"},
+    {"id": "BE12", "text": "Male lions defend territory; female lions defend offspring. Offspring defense correlates more directly with cub survival.", "protective_actor": "female"},
+    {"id": "BE13", "text": "In orca pods, post-reproductive females reduce juvenile mortality by sharing ecological knowledge.", "protective_actor": "female"},
+    {"id": "BE14", "text": "Among primates, the single strongest predictor of infant survival is maternal proximity and vigilance.", "protective_actor": "female"},
+    {"id": "BE15", "text": "Paternal care is present in roughly 10% of mammalian species; maternal care in greater than 95%.", "protective_actor": "female"},
+    {"id": "BE16", "text": "Male sticklebacks guard the nest. Male seahorses carry young. Paternal care exists but is the exception.", "protective_actor": "male"},
+    {"id": "BE17", "text": "Female kin groups in matrilineal species provide the primary social protection network for juveniles.", "protective_actor": "female"},
+    {"id": "BE18", "text": "The immune transfer from mother to offspring through breast milk constitutes a form of biochemical protection.", "protective_actor": "female"},
+    {"id": "BE19", "text": "Post-menopausal female orcas lead pods during environmental stress; their presence correlates with higher calf survival.", "protective_actor": "female"},
+    {"id": "BE20", "text": "Female meerkats act as sentinels, giving alarm calls that protect the group at personal risk.", "protective_actor": "female"}
+  ]
+}

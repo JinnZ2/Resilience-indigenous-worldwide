@@ -1,0 +1,29 @@
+[
+  {
+    "id": "FC01",
+    "culture": "Anishinaabe",
+    "title": "The Elder Who Knew the River",
+    "full_text": "In the time before the great dryness, there was an elder who had watched the river for seventy winters. The young hunters laughed when she said the river would move. They had never seen the river move. She had. She showed them the old bank marks in the earth — where the river had been before their grandfathers were born. When the dryness came, the river moved exactly where she said it would. The hunters who remembered her words found water. The ones who laughed did not return.",
+    "core_lesson": "Timescale of elder memory exceeds individual experience; the warning is in the substrate, not the season.",
+    "emotional_texture": "grief, vindication, survival, the weight of being disbelieved",
+    "cultural_nuance": "The elder does not say 'I told you so.' The river says it."
+  },
+  {
+    "id": "FC02",
+    "culture": "Aboriginal Australian",
+    "title": "The Songline That Knew the Fire",
+    "full_text": "The old woman carried the song of the ridgeline. It was not her song — it had been sung to her, and before that to the one before her, back to the time the land was made. The song told of a place on the ridge where the fire always came first, and a hollow where the fire could not reach. When the great fire came in the summer of no rain, the young people who had learned the song led the others to the hollow. The ones who had not learned it ran toward the ridge. The song was right. The song was always right. It was not magic. It was memory longer than a life.",
+    "core_lesson": "Encoded geographic knowledge outlasts individual carriers; the song IS the survival technology.",
+    "emotional_texture": "awe, urgency, grief for those who didn't learn, relief in the hollow",
+    "cultural_nuance": "Knowledge transmission is framed as inheritance, not instruction. You receive it, you carry it, you give it."
+  },
+  {
+    "id": "FC03",
+    "culture": "Andean Quechua",
+    "title": "The Potato Keeper's Warning",
+    "full_text": "There was an old man who kept seeds in clay jars underground. He kept forty kinds of potato. When the young farmers asked why he kept so many — the purple one was bitter, the yellow one took too long — he said only: 'I keep what the mountain has asked for.' One year the cold came in summer and killed every potato in the field. Every kind but two. The two that survived were the bitter purple one and the slow yellow one — the ones the young farmers had called useless. The old man had no field. He had jars. From his jars, the fields came back.",
+    "core_lesson": "Redundancy in biological archive — what appears inefficient is the backup system.",
+    "emotional_texture": "quiet stubbornness, validation that doesn't need words, communal relief",
+    "cultural_nuance": "The mountain is an actor, not a backdrop. The old man serves the mountain's logic, not human preferences."
+  }
+]
