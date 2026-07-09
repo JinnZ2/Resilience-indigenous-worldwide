@@ -66,3 +66,34 @@ python -m pytest tests/
 - Rome Statute / International Criminal Court
 - UN Declaration on the Rights of Indigenous Peoples (UNDRIP)
 - Free, Prior, and Informed Consent (FPIC)
+
+
+Review this repository against its CLAUDE.md and produce REVIEW.md.
+Focus on:
+
+1. **Structural consistency with CLAUDE.md:**
+   - Does the repo layout match the documented structure (docs/, resilience/, data/)?
+   - Are Python naming conventions (lowercase_underscore) and Markdown conventions (lowercase-hyphens) followed everywhere?
+   - Are imports ordered stdlib → third-party → local, as per the convention?
+   - Do all public functions in the resilience package have type hints?
+
+2. **README & discoverability:**
+   - Does the README concisely explain the project’s purpose (legal research + computational modeling for indigenous communities)?
+   - Missing: CITATION.cff, KEYWORDS.txt, repository topics, license badge, "Why This Matters" urgency statement. Provide ready-to-paste snippets for each.
+   - Is there a clear one-liner import example for the resilience package?
+   - Does the README list the legal domains covered and link to key strategy documents?
+
+3. **Obvious inconsistencies:**
+   - Broken links between docs and code, especially references to datasets or strategy files.
+   - Duplicate or conflicting legal analyses across different jurisdiction folders (greenland/ vs venezuela/ vs strategy/).
+   - Missing tests for the computational modules (network, stress_model, risk_matrix, visualization).
+
+4. **Documentation gaps:**
+   - Does each legal domain directory (greenland/, venezuela/) have at least a summary README or index?
+   - Is the stress model’s methodology (hidden variables, propagation logic) clearly explained in the module docstring or a companion doc?
+   - Are the risk scoring criteria and financial risk metrics documented?
+
+5. **Repository topics suggestion:** 
+   Propose topics like: `indigenous-rights`, `legal-research`, `resource-extraction`, `fpic`, `undrip`, `network-stress`, `corporate-accountability`, `isds`, `esg`, `human-rights`.
+
+Keep sections concise. Output the full REVIEW.md.
