@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+type: software
+title: "Resilience Indigenous Worldwide"
+abstract: >
+  Legal research and computational modeling tools supporting indigenous
+  communities facing resource extraction, military intervention, and
+  corporate colonization. Covers multi-jurisdictional legal analysis,
+  financial risk assessment, and network stress modeling.
+license: CC0-1.0
+repository-code: "https://github.com/JinnZ2/resilience-indigenous-worldwide"
+keywords:
+  - indigenous-rights
+  - legal-research
+  - resource-extraction
+  - fpic
+  - undrip
+  - network-stress
+  - corporate-accountability
+  - isds
+  - esg
+  - human-rights
