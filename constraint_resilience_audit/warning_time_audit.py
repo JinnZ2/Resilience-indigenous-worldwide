@@ -145,10 +145,41 @@ def audit(times, truth_loss, proxy_loss, tiers=None):
 
 if __name__ == "__main__":
     import json
-    # Demo: concave range-shifting case. Proxy loss rises linearly in time;
-    # true loss = proxy_loss ** 0.6 (truth crashes early, proxy lags).
+    # ---------------------------------------------------------------
+    # Demo A: concave range-shifting case. Proxy loss rises linearly
+    # in time; true loss = proxy_loss ** 0.6 (truth crashes early,
+    # proxy lags).
+    # ---------------------------------------------------------------
     T = list(range(0, 91))
     px = [t / 90.0 for t in T]
     ty = [round(p ** 0.6, 4) for p in px]
-    result = audit(T, ty, px)
-    print(json.dumps(result, indent=1))
+    print("# Demo A: concave range-shifting case")
+    print(json.dumps(audit(T, ty, px), indent=1))
+
+    # ---------------------------------------------------------------
+    # Demo B: ENSO-attribution proxy vs secular warming trend.
+    # Empirical anchor: docs/climate/state-of-climate-2025-bams.md.
+    # Through 2024, warmest years co-occurred with El Nino, letting
+    # observers attribute record temps to ENSO. In 2025 the trend
+    # line hit top-3 warmest with no El Nino present, exposing the
+    # ENSO-attribution proxy as an under-estimator of the secular
+    # signal.
+    #
+    # truth  = observed anomaly (secular trend + ENSO-year boost)
+    # proxy  = "trend after attributing ENSO away" (bumps subtracted)
+    # loss   = fraction of a 1.5 deg C anomaly ceiling consumed
+    # tiers  = 0.8 / 1.0 / 1.2 deg C thresholds
+    # ---------------------------------------------------------------
+    yrs = list(range(2000, 2046))
+    trend = [0.50 + i * 0.025 for i in range(len(yrs))]
+    enso_years = {2002, 2009, 2015, 2016, 2019, 2023, 2024, 2029, 2032, 2038, 2041}
+    boost = 0.20
+    truth_temp = [tr + (boost if y in enso_years else 0.0)
+                  for tr, y in zip(trend, yrs)]
+    proxy_temp = list(trend)
+    truth_loss_b = [x / 1.5 for x in truth_temp]
+    proxy_loss_b = [x / 1.5 for x in proxy_temp]
+    tiers_b = {"0.8C": 0.8 / 1.5, "1.0C": 1.0 / 1.5, "1.2C": 1.2 / 1.5}
+    print()
+    print("# Demo B: ENSO-attribution proxy vs secular trend")
+    print(json.dumps(audit(yrs, truth_loss_b, proxy_loss_b, tiers=tiers_b), indent=1))
