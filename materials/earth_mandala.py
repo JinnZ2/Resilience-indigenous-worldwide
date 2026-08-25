@@ -47,6 +47,28 @@ biodiv = np.clip(0.05 + np.maximum(0, (years - 2018) * 0.08) +
                  np.array([0,0,0,0,0,0.01,0.01,0.02,0.03,0.08,0.1,0.18,0.25,0.35,0.42,0.5,0.6]) +
                  np.random.normal(0, 0.02, len(years)), 0, 1)
 
+# ------------------------------------------------------------
+# 2025 ANCHORS from BAMS 36th State of the Climate
+# (docs/climate/state-of-climate-2025-bams.md).
+# The synthetic trajectory above overshoots reality by 2020-2025;
+# pinning the 2025 slot to observed values leaves a visible
+# discontinuity with 2024 and 2026 -- that gap IS the calibration
+# gap between the synthetic model and BAMS observations, not
+# something to smooth. Biodiversity is not covered in that BAMS
+# summary and remains synthetic here.
+#
+# Structural finding: 2025 was warmest without El Nino present, so
+# the peak-year framing in the docstring (Godzilla El Nino 2026)
+# is contradicted by the trend line already sufficing without an
+# ENSO assist.
+# ------------------------------------------------------------
+IDX_2025 = int(np.where(years == 2025)[0][0])
+temp[IDX_2025]     = 1.50                              # deg C above pre-industrial, top-3 without El Nino
+co2_norm[IDX_2025] = (425.6 - 380.0) / 100.0           # 0.456 from observed 425.6 ppm
+ohc[IDX_2025]      = max(float(ohc[IDX_2025]), 0.90)   # record high; pin at or above prior synthetic
+ice_loss[IDX_2025] = 0.60                              # record-low winter max, 11th-lowest summer min
+# biodiv[IDX_2025] left synthetic -- BAMS summary does not cover insects/birds
+
 # Stack into data matrix
 raw_data = np.stack([temp, ice_loss, ohc, co2_norm, biodiv], axis=1)  # (17, 5)
 # Normalize each column to unit variance
