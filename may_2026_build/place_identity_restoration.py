@@ -23,7 +23,7 @@ sustainability of practices, generational planning horizon) varies
 predictably with identity orientation, measurable through language
 patterns, time-preference markers, and self-description.
 
-Author: Kavik (JinnZ2)
+Author: JinnZ2
 License: CC0
 """
 

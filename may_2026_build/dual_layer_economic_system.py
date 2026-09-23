@@ -20,7 +20,7 @@ Falsifiable claim: regions implementing dual-layer systems show
 better crisis-period outcomes (food security, energy access, social
 stability) than regions maintaining single-layer formal economy.
 
-Author: Kavik (JinnZ2)
+Author: JinnZ2
 License: CC0
 """
 

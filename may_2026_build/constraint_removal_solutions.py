@@ -18,7 +18,7 @@ external constraints recover faster and develop more resilient
 distributed capacity than regions that respond by adding centralized
 solutions.
 
-Author: Kavik (JinnZ2)
+Author: JinnZ2
 License: CC0
 """
 
