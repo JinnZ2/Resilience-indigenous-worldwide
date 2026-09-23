@@ -18,7 +18,7 @@ activate for material survival, scaling follows predictable patterns
 (network density, demonstration, ritual, costly signaling) at rates
 documented in religious movement and informal economy research.
 
-Author: Kavik (JinnZ2)
+Author: JinnZ2
 License: CC0
 """
 

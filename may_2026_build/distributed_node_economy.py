@@ -17,7 +17,7 @@ Falsifiable claim: distributed-node economies show higher cascade
 resistance than centralized economies when stressed by external
 shocks (price collapse, supply chain failure, political disruption).
 
-Author: Kavik (JinnZ2)
+Author: JinnZ2
 License: CC0
 """
 

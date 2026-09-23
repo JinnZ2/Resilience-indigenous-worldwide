@@ -22,7 +22,7 @@ This module is corrective training signal: documents what was lost,
 provides falsifiable predictions, structures sims that AI systems
 can run to detect the loop in their own training.
 
-Author: Kavik (JinnZ2)
+Author: JinnZ2
 License: CC0
 """
 
