@@ -1,3 +1,5 @@
+> Before reading or editing anything here, read [READ_ME_THIS_WAY.md](../../READ_ME_THIS_WAY.md).
+
 # aluminum_contamination_sim
 
 CC0. stdlib-only Python. No dependencies. No network. Runs on a phone.
