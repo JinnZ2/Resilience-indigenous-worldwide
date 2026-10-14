@@ -1,3 +1,5 @@
+> Before reading or editing anything here, read [READ_ME_THIS_WAY.md](../../READ_ME_THIS_WAY.md).
+
 # Condensed Protocol: AI Age Bias & Reproductive-Value Assumption
 # CC0
 
