@@ -36,7 +36,7 @@ than in a smoothed final form.
 
 ## The substrates in dialogue
 
-- **Substrate A (Kavik):** substrate-primary cognition, energy-flow and
+- **Substrate A (JinnZ2):** substrate-primary cognition, energy-flow and
   thermodynamic-geometry reasoning, verb-first relational framing,
   landscape-encoded knowledge transmission, Anishinaabe relational
   grounding. Language is a translation layer over a deeper structural

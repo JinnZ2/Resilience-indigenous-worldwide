@@ -38,7 +38,7 @@ class Region:
 
 
 # ---------------------------------------------------------------------------
-# REGION SET  (the zones Kavik flagged)
+# REGION SET  (the zones JinnZ2 flagged)
 # ---------------------------------------------------------------------------
 # Values are deliberately conservative first-pass estimates. Replace via
 # regions_local.json overlay (see run_hotspot_scan.py) when field data lands.
